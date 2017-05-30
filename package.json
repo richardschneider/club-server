@@ -1,30 +1,28 @@
 {
-  "name": "apollo-starter-kit",
+  "name": "club-server",
   "version": "0.1.0",
-  "description": "Minimal set of code to write a GraphQL server with Apollo graphql-tools",
+  "description": "A multi-tenant bridge club server",
+  "homepage": "https://github.com/richardschneider/club-server#readme",
+  "bugs": "https://github.com/richardschneider/club-server/issues",
+  "license": "MIT",
+  "main": "server.js",
+  "author": {
+    "name": "Richard Schneider",
+    "email": "makaretu@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richardschneider/club-server"
+  },
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/apollostack/apollo-starter-kit.git"
-  },
   "keywords": [
-    "Node.js",
-    "Javascript",
-    "GraphQL",
-    "Express",
-    "Apollo",
-    "Meteor"
+    "bridge club",
+    "server"
   ],
-  "author": "Jonas Helfer <jonas@helfer.email>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/apollostack/apollo-starter-kit/issues"
-  },
-  "homepage": "https://github.com/apollostack/apollo-starter-kit#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "bridge.js": "^2.1.0",
