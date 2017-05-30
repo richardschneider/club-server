@@ -3,25 +3,32 @@ import casual from 'casual';
 import _ from 'lodash';
 import Mongoose from 'mongoose';
 import rp from 'request-promise';
-
+import bridge from 'bridge.js';
 
 const db = new Sequelize('blog', null, null, {
   dialect: 'sqlite',
   storage: './blog.sqlite',
 });
 
-const AuthorModel = db.define('author', {
-  firstName: { type: Sequelize.STRING },
-  lastName: { type: Sequelize.STRING },
+const ClubModel = db.define('club', {
+  name: { type: Sequelize.STRING },
 });
 
-const PostModel = db.define('post', {
+const SessionModel = db.define('session', {
   title: { type: Sequelize.STRING },
-  text: { type: Sequelize.STRING },
 });
 
-AuthorModel.hasMany(PostModel);
-PostModel.belongsTo(AuthorModel);
+const BoardModel = db.define('board', {
+  number: { type: Sequelize.INTEGER },
+  dealer: { type: Sequelize.STRING },
+  vulnerability: { type: Sequelize.STRING },
+  deal: { type: Sequelize.STRING },
+});
+
+ClubModel.hasMany(SessionModel);
+SessionModel.belongsTo(ClubModel);
+SessionModel.hasMany(BoardModel);
+BoardModel.belongsTo(SessionModel);
 
 // views in mongo DB
 
@@ -38,25 +45,25 @@ PostModel.belongsTo(AuthorModel);
 casual.seed(123);
 db.sync({ force: true }).then(() => {
   _.times(10, () => {
-    return AuthorModel.create({
-      firstName: casual.first_name,
-      lastName: casual.last_name,
-    }).then((author) => {
-      return author.createPost({
-        title: `A post by ${author.firstName}`,
-        text: casual.sentences(3),
-//      }).then((post) => {
-//        return View.update(
-//          { postId: post.id },
-//          { views: casual.integer(0, 100) },
-//          { upsert: true });
+    return ClubModel.create({
+      name: casual.city,
+    }).then((club) => {
+      return club.createSession({
+        title: `A session for ${club.name}`,
       });
+    }).then((session) => {
+        bridge.Session.generateBoards(2).boards.forEach((b) => session.createBoard({
+            number: b.number,
+            dealer: b.dealer.symbol,
+            vulnerability: b.vulnerability,
+            deal: bridge.pbn.exportDeal(b.hands, b.dealer),
+        }));
     });
   });
 });
 
-const Author = db.models.author;
-const Post = db.models.post;
+const Club = db.models.club;
+const Session = db.models.session;
 
 const FortuneCookie = {
   getOne() {
@@ -69,4 +76,4 @@ const FortuneCookie = {
 };
 
 
-export { Author, Post, FortuneCookie };
+export { Club, Session, FortuneCookie };

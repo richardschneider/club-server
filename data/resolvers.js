@@ -1,27 +1,39 @@
-import { Author, FortuneCookie } from './connectors';
+import { Club, FortuneCookie } from './connectors';
 
 const resolvers = {
   Query: {
-    author(_, args) {
-      return Author.find({ where: args });
+    clubs() {
+      return Club.findAll({});
     },
     getFortuneCookie(){
       return FortuneCookie.getOne();
     }
   },
-  Author: {
-    posts(author) {
-      return author.getPosts();
+    
+  Club: {
+    sessions(club) {
+      return club.getSessions();
     },
   },
-  Post: {
-    author(post) {
-      return post.getAuthor();
+    
+  Session: {
+    club(session) {
+      return session.getClub();
     },
+    boards(session) {
+        return session.getBoards();
+    },
+  },
+
+  Board: {
+    session(board) {
+      return board.getSession();
+    },
+  },
+
 //    views(post) {
 //      return View.findOne({ postId: post.id }).then((view) => view.views);
 //    },
-  },
 };
 
 export default resolvers;

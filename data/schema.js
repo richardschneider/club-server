@@ -1,20 +1,30 @@
 const typeDefinitions = `
-type Author {
-  id: Int
-  firstName: String
-  lastName: String
-  posts: [Post]
+
+
+type Club {
+  id: ID
+  name: String
+  sessions: [Session]
 }
 
-type Post {
-  id: Int
+type Session {
+  id: ID
   title: String
-  text: String
-  author: Author
+  club: Club
+  boards: [Board]
+}
+
+type Board {
+  id: ID
+  session: Session
+  number: Int
+  dealer: String
+  vulnerability: String
+  deal: String
 }
 
 type Query {
-  author(firstName: String, lastName: String): Author
+  clubs: [Club]
   getFortuneCookie: String
 }
 
