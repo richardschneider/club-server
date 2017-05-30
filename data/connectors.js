@@ -25,10 +25,20 @@ const BoardModel = db.define('board', {
   deal: { type: Sequelize.STRING },
 });
 
+const GameModel = db.define('game', {
+  level: { type: Sequelize.INTEGER },
+  denomination: { type: Sequelize.STRING },
+  risk: { type: Sequelize.STRING },
+  declaror: { type: Sequelize.STRING },
+  score: { type: Sequelize.INTEGER },
+});
+
 ClubModel.hasMany(SessionModel);
 SessionModel.belongsTo(ClubModel);
 SessionModel.hasMany(BoardModel);
 BoardModel.belongsTo(SessionModel);
+BoardModel.hasMany(GameModel);
+GameModel.belongsTo(BoardModel);
 
 // views in mongo DB
 
@@ -52,11 +62,23 @@ db.sync({ force: true }).then(() => {
         title: `A session for ${club.name}`,
       });
     }).then((session) => {
-        bridge.Session.generateBoards(2).boards.forEach((b) => session.createBoard({
-            number: b.number,
-            dealer: b.dealer.symbol,
-            vulnerability: b.vulnerability,
-            deal: bridge.pbn.exportDeal(b.hands, b.dealer),
+        return Promise.all(bridge.Session.generateBoards(2).boards.map((b) => {
+            return session.createBoard({
+                number: b.number,
+                dealer: b.dealer.symbol,
+                vulnerability: b.vulnerability,
+                deal: bridge.pbn.exportDeal(b.hands, b.dealer),
+            });
+        }));
+    }).then((boards) => {
+        return Promise.all(boards.map((board) => {
+            return board.createGame({
+                level: 3,
+                denomination: 'NT',
+                risk: '',
+                declaror: 'W',
+                score: -50,
+            });
         }));
     });
   });

@@ -29,7 +29,30 @@ const resolvers = {
     session(board) {
       return board.getSession();
     },
+    games(board) {
+      return board.getGames();
+    }
   },
+
+  Game: {
+    board(game) {
+      return game.getBoard();
+    },
+    contract(game) {
+        return {
+            level: game.level,
+            denomination: game.denomination,
+            risk: game.risk,
+            declaror: game.declaror,
+        }
+    },
+    scoreNS(game) {
+        return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score
+    },
+    scoreEW(game) {
+        return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score
+    },
+   },
 
 //    views(post) {
 //      return View.findOne({ postId: post.id }).then((view) => view.views);
