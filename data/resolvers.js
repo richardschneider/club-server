@@ -1,4 +1,4 @@
-import { Club, Player, Session, Board, FortuneCookie } from './connectors';
+import { Club, Player, Session, SessionPair, Board, FortuneCookie } from './connectors';
 
 const resolvers = {
   Query: {
@@ -32,8 +32,17 @@ const resolvers = {
     boards(session) {
         return session.getBoards();
     },
+    players(session) {
+        return session.getSessionPlayers();
+    }
   },
 
+  SessionPlayer: {
+      player(sessionPlayer) {
+          return sessionPlayer.getPlayer();
+      }
+  },
+    
   Board: {
     session(board) {
       return board.getSession();

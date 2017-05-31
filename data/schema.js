@@ -17,7 +17,26 @@ type Session {
   title: String
   club: Club
   boards: [Board]
+  pairs: [SessionPair]
+  players: [SessionPlayer]
 }
+
+type SessionPlayer {
+  id: ID
+  session: Session
+  player: Player
+  table: Int
+  seat: String
+}
+
+type SessionPair {
+  session: Session
+  number: Int
+  title: String
+  name: String
+  direction: String
+  players: [SessionPlayer]
+ }
 
 type Board {
   id: ID
@@ -36,6 +55,8 @@ type Game {
   score: Int
   scoreNS: Int
   scoreEW: Int
+  NS: SessionPair
+  EW: SessionPair
 }
 
 type Contract {
