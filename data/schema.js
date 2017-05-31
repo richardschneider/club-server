@@ -7,6 +7,11 @@ type Club {
   sessions: [Session]
 }
 
+type Player {
+  id: ID
+  name: String
+}
+
 type Session {
   id: ID
   title: String
@@ -42,6 +47,7 @@ type Contract {
 
 type Query {
   clubs: [Club]
+  player(id: ID!) : Player
   board(id: ID!) : Board
   session(id: ID!) : Session
   getFortuneCookie: String

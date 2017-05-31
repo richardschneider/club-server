@@ -1,9 +1,12 @@
-import { Club, Session, Board, FortuneCookie } from './connectors';
+import { Club, Player, Session, Board, FortuneCookie } from './connectors';
 
 const resolvers = {
   Query: {
     clubs() {
       return Club.findAll({});
+    },
+    player(_, args) {
+      return Player.find({ where: args });
     },
     board(_, args) {
       return Board.find({ where: args });

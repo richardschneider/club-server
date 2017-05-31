@@ -14,6 +14,10 @@ const ClubModel = db.define('club', {
   name: { type: Sequelize.STRING },
 });
 
+const PlayerModel = db.define('player', {
+  name: { type: Sequelize.STRING },
+});
+
 const SessionModel = db.define('session', {
   title: { type: Sequelize.STRING },
 });
@@ -54,7 +58,16 @@ GameModel.belongsTo(BoardModel);
 
 casual.seed(123);
 db.sync({ force: true }).then(() => {
-  _.times(10, () => {
+  const maxPlayers = 20;
+  const maxClubs = 5;
+    
+  _.times(maxPlayers, () => {
+    return PlayerModel.create({
+      name: casual.full_name,
+    });
+  });
+
+  _.times(maxClubs, () => {
     return ClubModel.create({
       name: casual.city,
     }).then((club) => {
@@ -85,6 +98,7 @@ db.sync({ force: true }).then(() => {
 });
 
 const Club = db.models.club;
+const Player = db.models.player;
 const Session = db.models.session;
 const Board = db.models.board;
 
@@ -99,4 +113,4 @@ const FortuneCookie = {
 };
 
 
-export { Club, Session, Board, FortuneCookie };
+export { Club, Player, Session, Board, FortuneCookie };
