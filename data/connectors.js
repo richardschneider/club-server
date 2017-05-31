@@ -86,6 +86,7 @@ db.sync({ force: true }).then(() => {
 
 const Club = db.models.club;
 const Session = db.models.session;
+const Board = db.models.board;
 
 const FortuneCookie = {
   getOne() {
@@ -98,4 +99,4 @@ const FortuneCookie = {
 };
 
 
-export { Club, Session, FortuneCookie };
+export { Club, Session, Board, FortuneCookie };

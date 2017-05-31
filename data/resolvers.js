@@ -1,9 +1,15 @@
-import { Club, FortuneCookie } from './connectors';
+import { Club, Session, Board, FortuneCookie } from './connectors';
 
 const resolvers = {
   Query: {
     clubs() {
       return Club.findAll({});
+    },
+    board(_, args) {
+      return Board.find({ where: args });
+    },
+    session(_, args) {
+      return Session.find({ where: args });
     },
     getFortuneCookie(){
       return FortuneCookie.getOne();

@@ -42,6 +42,8 @@ type Contract {
 
 type Query {
   clubs: [Club]
+  board(id: ID!) : Board
+  session(id: ID!) : Session
   getFortuneCookie: String
 }
 
