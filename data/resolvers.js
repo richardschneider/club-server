@@ -34,6 +34,22 @@ const resolvers = {
     },
     players(session) {
         return session.getSessionPlayers();
+    },
+    pairs(session) {
+        return session.getSessionPlayers({ include: [ Player ] })
+            .then(sessionPlayers => {
+                var map = {};
+                sessionPlayers.forEach(sp => {
+                    var direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
+                    var name = direction + sp.table;
+                    var pair = map[name] || { direction: direction, name: name, table: sp.table, players: []};
+                    var player = sp.player;
+                    pair.players.push(player)
+                    pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
+                    map[name] = pair;
+                });
+                return Object.getOwnPropertyNames(map).map(val => map[val]);
+            });
     }
   },
 

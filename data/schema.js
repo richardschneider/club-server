@@ -30,12 +30,11 @@ type SessionPlayer {
 }
 
 type SessionPair {
-  session: Session
-  number: Int
+  table: Int
+  direction: String
   title: String
   name: String
-  direction: String
-  players: [SessionPlayer]
+  players: [Player]
  }
 
 type Board {
