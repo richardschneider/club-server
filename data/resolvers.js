@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, FortuneCookie } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie } from './connectors';
 
 const resolvers = {
   Query: {
@@ -32,6 +32,11 @@ const resolvers = {
     boards(session) {
         return session.getBoards();
     },
+    games(session) {
+        return Game.findAll({
+           include: [{model: Board, where: {sessionId: session.id}}] 
+        });
+    },
     players(session) {
         return session.getSessionPlayers();
     },
@@ -42,7 +47,12 @@ const resolvers = {
                 sessionPlayers.forEach(sp => {
                     var direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
                     var name = direction + sp.table;
-                    var pair = map[name] || { direction: direction, name: name, table: sp.table, players: []};
+                    var pair = map[name] || {
+                        session: session,
+                        direction: direction, 
+                        name: name, 
+                        table: sp.table, 
+                        players: []};
                     var player = sp.player;
                     pair.players.push(player)
                     pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
@@ -57,6 +67,22 @@ const resolvers = {
       player(sessionPlayer) {
           return sessionPlayer.getPlayer();
       }
+  },
+  
+  SessionPair: {
+     games(sessionPair) {
+        var sessionId = sessionPair.session.id;
+        var q = {};
+        if (sessionPair.direction === 'NS') {
+            q.ns = sessionPair.table;
+        } else {
+            q.ew = sessionPair.table;
+        }
+       return Game.findAll({
+           where: q,
+           include: [{model: Board, where: {sessionId: sessionId}}] 
+        });
+    },     
   },
     
   Board: {

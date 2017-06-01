@@ -35,6 +35,8 @@ const BoardModel = db.define('board', {
 });
 
 const GameModel = db.define('game', {
+  ns: { type: Sequelize.INTEGER },
+  ew: { type: Sequelize.INTEGER },
   level: { type: Sequelize.INTEGER },
   denomination: { type: Sequelize.STRING },
   risk: { type: Sequelize.STRING },
@@ -135,6 +137,8 @@ db.sync({ force: true }).then(() => {
             .then((boards) => {
                 return Promise.all(boards.map((board) => {
                     return board.createGame({
+                        ns: 1,
+                        ew: 1,
                         level: 3,
                         denomination: 'NT',
                         risk: '',
@@ -153,6 +157,7 @@ const Player = db.models.player;
 const Session = db.models.session;
 const SessionPlayer = db.models.session;
 const Board = db.models.board;
+const Game = db.models.game;
 
 const FortuneCookie = {
   getOne() {
@@ -165,4 +170,4 @@ const FortuneCookie = {
 };
 
 
-export { Club, Player, Session, SessionPlayer, Board, FortuneCookie };
+export { Club, Player, Session, SessionPlayer, Board, Game, FortuneCookie };

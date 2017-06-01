@@ -17,6 +17,7 @@ type Session {
   title: String
   club: Club
   boards: [Board]
+  games: [Game]
   pairs: [SessionPair]
   players: [SessionPlayer]
 }
@@ -30,11 +31,13 @@ type SessionPlayer {
 }
 
 type SessionPair {
+  session: Session
   table: Int
   direction: String
   title: String
   name: String
   players: [Player]
+  games: [Game]
  }
 
 type Board {
