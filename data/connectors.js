@@ -169,5 +169,36 @@ const FortuneCookie = {
   },
 };
 
+const SessionPair = {}
+SessionPair.getAll = function(session) {
+    return session
+        .getSessionPlayers({ include: [ Player ] })
+        .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers))
+};
+SessionPair.getPair = function(session, direction, table) {
+    var q = { table: table, seat: {$in: Array.from(direction)}};
+    return session
+        .getSessionPlayers({ where: q, include: [Player] })
+        .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers))
+        .then(pairs => pairs[0])
+};
+SessionPair.fromSessionPlayers = function(session, sessionPlayers) {
+    var map = {};
+    sessionPlayers.forEach(sp => {
+        var direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
+        var name = direction + sp.table;
+        var pair = map[name] || {
+            session: session,
+            direction: direction, 
+            name: name, 
+            table: sp.table, 
+            players: []};
+        var player = sp.player;
+        pair.players.push(player)
+        pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
+        map[name] = pair;
+    });
+    return Object.getOwnPropertyNames(map).map(val => map[val]);    
+};
 
-export { Club, Player, Session, SessionPlayer, Board, Game, FortuneCookie };
+export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, FortuneCookie };

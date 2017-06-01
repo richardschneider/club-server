@@ -41,25 +41,7 @@ const resolvers = {
         return session.getSessionPlayers();
     },
     pairs(session) {
-        return session.getSessionPlayers({ include: [ Player ] })
-            .then(sessionPlayers => {
-                var map = {};
-                sessionPlayers.forEach(sp => {
-                    var direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
-                    var name = direction + sp.table;
-                    var pair = map[name] || {
-                        session: session,
-                        direction: direction, 
-                        name: name, 
-                        table: sp.table, 
-                        players: []};
-                    var player = sp.player;
-                    pair.players.push(player)
-                    pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
-                    map[name] = pair;
-                });
-                return Object.getOwnPropertyNames(map).map(val => map[val]);
-            });
+        return SessionPair.getAll(session);
     }
   },
 
@@ -112,7 +94,19 @@ const resolvers = {
     scoreEW(game) {
         return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score
     },
-   },
+    NS(game) {
+        return game.getBoard()
+            .then(board => board.getSession())
+            .then(session => SessionPair.getPair(session, 'NS', game.ns))
+        ;
+    },
+    EW(game) {
+        return game.getBoard()
+            .then(board => board.getSession())
+            .then(session => SessionPair.getPair(session, 'EW', game.ew))
+        ;
+    },
+  },
 
 //    views(post) {
 //      return View.findOne({ postId: post.id }).then((view) => view.views);
