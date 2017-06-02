@@ -2,6 +2,7 @@ import express from 'express';
 import Schema from './data/schema';
 import Resolvers from './data/resolvers';
 import cors from 'cors';
+import compression from 'compression';
 // import Mocks from './data/mocks';
 
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
@@ -11,6 +12,7 @@ import bodyParser from 'body-parser';
 const GRAPHQL_PORT = 3001;
 
 const graphQLServer = express();
+graphQLServer.use(compression())
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
