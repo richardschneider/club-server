@@ -1,13 +1,14 @@
 import express from 'express';
 import Schema from './data/schema';
 import Resolvers from './data/resolvers';
+import cors from 'cors';
 // import Mocks from './data/mocks';
 
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
 
-const GRAPHQL_PORT = 8080;
+const GRAPHQL_PORT = 3001;
 
 const graphQLServer = express();
 
@@ -25,7 +26,7 @@ const executableSchema = makeExecutableSchema({
 // });
 
 // `context` must be an object and can't be undefined when using connectors
-graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
+graphQLServer.use('/graphql', cors(), bodyParser.json(), graphqlExpress({
   schema: executableSchema,
   context: {},
 }));

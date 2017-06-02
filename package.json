@@ -26,6 +26,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bridge.js": "^2.1.0",
+    "cors": "^2.8.3",
     "express": "4.15.3",
     "graphql": "^0.8.0",
     "graphql-server-express": "^0.7.2",
