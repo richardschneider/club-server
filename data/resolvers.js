@@ -5,6 +5,9 @@ const resolvers = {
     clubs() {
       return Club.findAll({});
     },
+    club(_, args) {
+      return Club.find({ where: args });
+    },
     player(_, args) {
       return Player.find({ where: args });
     },

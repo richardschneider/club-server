@@ -70,6 +70,7 @@ type Contract {
 
 type Query {
   clubs: [Club]
+  club(id: ID!) : Club
   player(id: ID!) : Player
   board(id: ID!) : Board
   session(id: ID!) : Session
