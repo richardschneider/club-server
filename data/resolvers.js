@@ -89,13 +89,13 @@ const resolvers = {
             denomination: game.denomination,
             risk: game.risk,
             declaror: game.declaror,
-        }
+        };
     },
     scoreNS(game) {
-        return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score
+        return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score;
     },
     scoreEW(game) {
-        return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score
+        return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score;
     },
     NS(game) {
         return game.getBoard()
@@ -111,9 +111,6 @@ const resolvers = {
     },
   },
 
-//    views(post) {
-//      return View.findOne({ postId: post.id }).then((view) => view.views);
-//    },
 };
 
 export default resolvers;

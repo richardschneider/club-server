@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
-import Mongoose from 'mongoose';
 import rp from 'request-promise';
 import bridge from 'bridge.js';
 
@@ -55,19 +54,7 @@ BoardModel.belongsTo(SessionModel);
 BoardModel.hasMany(GameModel);
 GameModel.belongsTo(BoardModel);
 
-PlayerModel.hasMany(SessionPlayerModel)
-
-// views in mongo DB
-
-//const mongo = Mongoose.connect('mongodb://localhost/views');
-
-//const ViewSchema = Mongoose.Schema({
-//  postId: Number,
-//  views: Number,
-//});
-//
-//const View = Mongoose.model('views', ViewSchema);
-
+PlayerModel.hasMany(SessionPlayerModel);
 
 casual.seed(123);
 db.sync({ force: true }).then(() => {
@@ -104,17 +91,17 @@ db.sync({ force: true }).then(() => {
                     table: 1,
                 })
                 .then(sp => sp.setPlayer(players[0]))
-                .then(_ => session.createSessionPlayer({
+                .then(() => session.createSessionPlayer({
                     seat: 'S',
                     table: 1,
                 })) 
                 .then(sp => sp.setPlayer(players[1]))
-                .then(_ => session.createSessionPlayer({
+                .then(() => session.createSessionPlayer({
                     seat: 'E',
                     table: 1,
                 })) 
                 .then(sp => sp.setPlayer(players[2]))
-                .then(_ => session.createSessionPlayer({
+                .then(() => session.createSessionPlayer({
                     seat: 'W',
                     table: 1,
                 })) 
@@ -171,11 +158,11 @@ const FortuneCookie = {
   },
 };
 
-const SessionPair = {}
+const SessionPair = {};
 SessionPair.getAll = function(session) {
     return session
         .getSessionPlayers({ include: [ Player ] })
-        .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers))
+        .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers));
 };
 SessionPair.getPair = function(session, direction, table) {
     var q = { table: table, seat: {$in: Array.from(direction)}};
@@ -183,6 +170,7 @@ SessionPair.getPair = function(session, direction, table) {
         .getSessionPlayers({ where: q, include: [Player] })
         .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers))
         .then(pairs => pairs[0])
+    ;
 };
 SessionPair.fromSessionPlayers = function(session, sessionPlayers) {
     var map = {};
@@ -196,7 +184,7 @@ SessionPair.fromSessionPlayers = function(session, sessionPlayers) {
             table: sp.table, 
             players: []};
         var player = sp.player;
-        pair.players.push(player)
+        pair.players.push(player);
         pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
         map[name] = pair;
     });
