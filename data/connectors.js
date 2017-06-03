@@ -42,6 +42,7 @@ const GameModel = db.define('game', {
   risk: { type: Sequelize.STRING },
   declaror: { type: Sequelize.STRING },
   score: { type: Sequelize.INTEGER },
+  made: { type: Sequelize.INTEGER },
 });
 
 ClubModel.hasMany(SessionModel);
@@ -144,6 +145,7 @@ db.sync({ force: true }).then(() => {
                         risk: '',
                         declaror: 'W',
                         score: -50,
+                        made: -1,
                     });
                 }));
             });
