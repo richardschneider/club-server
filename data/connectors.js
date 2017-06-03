@@ -23,7 +23,7 @@ const SessionModel = db.define('session', {
 
 const SessionPlayerModel = db.define('sessionPlayer', {
   seat: { type: Sequelize.STRING },
-  table: { type: Sequelize.INTEGER }
+  table: { type: Sequelize.INTEGER },
 });
 
 const BoardModel = db.define('board', {
@@ -58,87 +58,86 @@ PlayerModel.hasMany(SessionPlayerModel);
 
 casual.seed(123);
 db.sync({ force: true }).then(() => {
-    const maxPlayers = 20;
-    const maxClubs = 5;
-    
+  const maxPlayers = 20;
+  const maxClubs = 5;
+
     // Create a set of players
-    Promise.all(
+  Promise.all(
         _.times(maxPlayers, () => {
-            return PlayerModel.create({
-                name: casual.full_name,
-            });
-        })
+          return PlayerModel.create({
+            name: casual.full_name,
+          });
+        }),
       )
-    
+
     // Create some clubs
-    .then(players => {
-        _.times(maxClubs, () => {
-            return ClubModel.create({
-                name: casual.city,
-            })
-            
+    .then((players) => {
+      _.times(maxClubs, () => {
+        return ClubModel.create({
+          name: casual.city,
+        })
+
             // With one session
-            .then(club => {
-                return club.createSession({
-                    title: `A session for ${club.name}`,
-                });
+            .then((club) => {
+              return club.createSession({
+                title: `A session for ${club.name}`,
+              });
             })
-            
+
             // Then 4 players per session
-            .then(session => {
-                return session.createSessionPlayer({
-                    seat: 'N',
-                    table: 1,
-                })
+            .then((session) => {
+              return session.createSessionPlayer({
+                seat: 'N',
+                table: 1,
+              })
                 .then(sp => sp.setPlayer(players[0]))
                 .then(() => session.createSessionPlayer({
-                    seat: 'S',
-                    table: 1,
-                })) 
+                  seat: 'S',
+                  table: 1,
+                }))
                 .then(sp => sp.setPlayer(players[1]))
                 .then(() => session.createSessionPlayer({
-                    seat: 'E',
-                    table: 1,
-                })) 
+                  seat: 'E',
+                  table: 1,
+                }))
                 .then(sp => sp.setPlayer(players[2]))
                 .then(() => session.createSessionPlayer({
-                    seat: 'W',
-                    table: 1,
-                })) 
+                  seat: 'W',
+                  table: 1,
+                }))
                 .then(sp => sp.setPlayer(players[3]))
                 .then(() => session);
             })
 
             // With 2 boards per session
             .then((session) => {
-                return Promise.all(bridge.Session.generateBoards(2).boards.map((b) => {
-                    return session.createBoard({
-                        number: b.number,
-                        dealer: b.dealer.symbol,
-                        vulnerability: b.vulnerability,
-                        deal: bridge.pbn.exportDeal(b.hands, b.dealer),
-                    });
-                }));
+              return Promise.all(bridge.Session.generateBoards(2).boards.map((b) => {
+                return session.createBoard({
+                  number: b.number,
+                  dealer: b.dealer.symbol,
+                  vulnerability: b.vulnerability,
+                  deal: bridge.pbn.exportDeal(b.hands, b.dealer),
+                });
+              }));
             })
-            
+
             // With 1 game per board
             .then((boards) => {
-                return Promise.all(boards.map((board) => {
-                    return board.createGame({
-                        ns: 1,
-                        ew: 1,
-                        level: 3,
-                        denomination: 'NT',
-                        risk: '',
-                        declaror: 'W',
-                        score: -50,
-                        made: -1,
-                    });
-                }));
+              return Promise.all(boards.map((board) => {
+                return board.createGame({
+                  ns: 1,
+                  ew: 1,
+                  level: 3,
+                  denomination: 'NT',
+                  risk: '',
+                  declaror: 'W',
+                  score: -50,
+                  made: -1,
+                });
+              }));
             });
-        });
+      });
     });
-
 });
 
 const Club = db.models.club;
@@ -151,7 +150,7 @@ const Game = db.models.game;
 const FortuneCookie = {
   getOne() {
     return rp('http://fortunecookieapi.com/v1/cookie')
-      .then((res) => JSON.parse(res))
+      .then(res => JSON.parse(res))
       .then((res) => {
         return res[0].fortune.message;
       });
@@ -159,36 +158,36 @@ const FortuneCookie = {
 };
 
 const SessionPair = {};
-SessionPair.getAll = function(session) {
-    return session
-        .getSessionPlayers({ include: [ Player ] })
+SessionPair.getAll = function (session) {
+  return session
+        .getSessionPlayers({ include: [Player] })
         .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers));
 };
-SessionPair.getPair = function(session, direction, table) {
-    var q = { table: table, seat: {$in: Array.from(direction)}};
-    return session
+SessionPair.getPair = function (session, direction, table) {
+  const q = { table, seat: { $in: Array.from(direction) } };
+  return session
         .getSessionPlayers({ where: q, include: [Player] })
         .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers))
         .then(pairs => pairs[0])
     ;
 };
-SessionPair.fromSessionPlayers = function(session, sessionPlayers) {
-    var map = {};
-    sessionPlayers.forEach(sp => {
-        var direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
-        var name = direction + sp.table;
-        var pair = map[name] || {
-            session: session,
-            direction: direction, 
-            name: name, 
-            table: sp.table, 
-            players: []};
-        var player = sp.player;
-        pair.players.push(player);
-        pair.title = pair.title ? pair.title + ' / ' + player.name : player.name;
-        map[name] = pair;
-    });
-    return Object.getOwnPropertyNames(map).map(val => map[val]);    
+SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
+  const map = {};
+  sessionPlayers.forEach((sp) => {
+    const direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
+    const name = direction + sp.table;
+    const pair = map[name] || {
+      session,
+      direction,
+      name,
+      table: sp.table,
+      players: [] };
+    const player = sp.player;
+    pair.players.push(player);
+    pair.title = pair.title ? `${pair.title} / ${player.name}` : player.name;
+    map[name] = pair;
+  });
+  return Object.getOwnPropertyNames(map).map(val => map[val]);
 };
 
 export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, FortuneCookie };

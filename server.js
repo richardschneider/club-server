@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 const GRAPHQL_PORT = 3001;
 
 const graphQLServer = express();
-graphQLServer.use(compression())
+graphQLServer.use(compression());
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
@@ -38,5 +38,5 @@ graphQLServer.use('/graphiql', graphiqlExpress({
 }));
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(
-  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`
+  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`,
 ));

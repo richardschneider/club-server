@@ -17,66 +17,66 @@ const resolvers = {
     session(_, args) {
       return Session.find({ where: args });
     },
-    getFortuneCookie(){
+    getFortuneCookie() {
       return FortuneCookie.getOne();
-    }
+    },
   },
-    
+
   Club: {
     sessions(club) {
       return club.getSessions();
     },
   },
-    
+
   Session: {
     club(session) {
       return session.getClub();
     },
     boards(session) {
-        return session.getBoards();
+      return session.getBoards();
     },
     games(session) {
-        return Game.findAll({
-           include: [{model: Board, where: {sessionId: session.id}}] 
-        });
+      return Game.findAll({
+        include: [{ model: Board, where: { sessionId: session.id } }],
+      });
     },
     players(session) {
-        return session.getSessionPlayers();
+      return session.getSessionPlayers();
     },
     pairs(session) {
-        return SessionPair.getAll(session);
-    }
+      return SessionPair.getAll(session);
+    },
   },
 
   SessionPlayer: {
-      player(sessionPlayer) {
-          return sessionPlayer.getPlayer();
-      }
+    player(sessionPlayer) {
+      return sessionPlayer.getPlayer();
+    },
   },
-  
+
   SessionPair: {
-     games(sessionPair) {
-        var sessionId = sessionPair.session.id;
-        var q = {};
-        if (sessionPair.direction === 'NS') {
-            q.ns = sessionPair.table;
-        } else {
-            q.ew = sessionPair.table;
-        }
-       return Game.findAll({
-           where: q,
-           include: [{model: Board, where: {sessionId: sessionId}}] 
-        });
-    },     
+    games(sessionPair) {
+      const sessionId = sessionPair.session.id;
+      const q = {};
+      if (sessionPair.direction === 'NS') {
+        q.ns = sessionPair.table;
+      } else {
+        q.ew = sessionPair.table;
+      }
+      return Game.findAll({
+        where: q,
+        include: [{ model: Board, where: { sessionId } }],
+      });
+    },
   },
-    
+
   Board: {
     session(board) {
       return board.getSession();
     },
     games(board) {
       return board.getGames();
-    }
+    },
   },
 
   Game: {
@@ -84,27 +84,27 @@ const resolvers = {
       return game.getBoard();
     },
     contract(game) {
-        return {
-            level: game.level,
-            denomination: game.denomination,
-            risk: game.risk,
-            declaror: game.declaror,
-        };
+      return {
+        level: game.level,
+        denomination: game.denomination,
+        risk: game.risk,
+        declaror: game.declaror,
+      };
     },
     scoreNS(game) {
-        return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score;
+      return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score;
     },
     scoreEW(game) {
-        return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score;
+      return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score;
     },
     NS(game) {
-        return game.getBoard()
+      return game.getBoard()
             .then(board => board.getSession())
             .then(session => SessionPair.getPair(session, 'NS', game.ns))
         ;
     },
     EW(game) {
-        return game.getBoard()
+      return game.getBoard()
             .then(board => board.getSession())
             .then(session => SessionPair.getPair(session, 'EW', game.ew))
         ;
