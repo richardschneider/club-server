@@ -3,7 +3,11 @@ import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie } from '
 const resolvers = {
   Query: {
     clubs() {
-      return Club.findAll({});
+      return Club.findAll({
+        order: [
+          ['name', 'ASC']
+        ],
+      });
     },
     club(_, args) {
       return Club.find({ where: args });
