@@ -88,23 +88,44 @@ db.sync({ force: true }).then(() => {
                 seat: 'N',
                 table: 1,
               })
-                .then(sp => sp.setPlayer(players[0]))
-                .then(() => session.createSessionPlayer({
-                  seat: 'S',
-                  table: 1,
-                }))
-                .then(sp => sp.setPlayer(players[1]))
-                .then(() => session.createSessionPlayer({
-                  seat: 'E',
-                  table: 1,
-                }))
-                .then(sp => sp.setPlayer(players[2]))
-                .then(() => session.createSessionPlayer({
-                  seat: 'W',
-                  table: 1,
-                }))
-                .then(sp => sp.setPlayer(players[3]))
-                .then(() => session);
+              .then(sp => sp.setPlayer(players[0]))
+              .then(() => session.createSessionPlayer({
+                seat: 'S',
+                table: 1,
+              }))
+              .then(sp => sp.setPlayer(players[1]))
+              .then(() => session.createSessionPlayer({
+                seat: 'E',
+                table: 1,
+              }))
+              .then(sp => sp.setPlayer(players[4]))
+              .then(() => session.createSessionPlayer({
+                seat: 'E',
+                table: 2,
+              }))
+              .then(sp => sp.setPlayer(players[5]))
+              .then(() => session.createSessionPlayer({
+                seat: 'W',
+                table: 2,
+              }))
+              .then(sp => sp.setPlayer(players[6]))
+              .then(() => session.createSessionPlayer({
+                seat: 'N',
+                table: 2,
+              }))
+              .then(sp => sp.setPlayer(players[7]))
+              .then(() => session.createSessionPlayer({
+                seat: 'S',
+                table: 2,
+              }))
+
+              .then(sp => sp.setPlayer(players[2]))
+              .then(() => session.createSessionPlayer({
+                seat: 'W',
+                table: 1,
+              }))
+              .then(sp => sp.setPlayer(players[3]))
+              .then(() => session);
             })
 
             // With 2 boards per session
@@ -119,7 +140,7 @@ db.sync({ force: true }).then(() => {
               }));
             })
 
-            // With 1 game per board
+            // With 2 games per board
             .then((boards) => {
               return Promise.all(boards.map((board) => {
                 return board.createGame({
@@ -131,7 +152,18 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -50,
                   made: -1,
-                });
+                })
+                .then(() => board.createGame({
+                  ns: 2,
+                  ew: 2,
+                  level: 3,
+                  denomination: 'NT',
+                  risk: 'X',
+                  declaror: 'W',
+                  score: -50,
+                  made: -2,
+                }))
+                ;
               }));
             });
       });
