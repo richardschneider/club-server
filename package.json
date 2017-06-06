@@ -26,6 +26,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bridge.js": "^2.1.0",
+    "casual": "^1.5.2",
     "compression": "^1.6.2",
     "cors": "^2.8.3",
     "express": "4.15.3",
@@ -45,7 +46,6 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "6.24.1",
-    "casual": "^1.5.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",

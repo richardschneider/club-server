@@ -15,6 +15,7 @@ type Player {
 type Session {
   id: ID
   title: String
+  date: String
   club: Club
   boards: [Board]
   games: [Game]

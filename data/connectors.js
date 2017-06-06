@@ -19,6 +19,7 @@ const PlayerModel = db.define('player', {
 
 const SessionModel = db.define('session', {
   title: { type: Sequelize.STRING },
+  date: { type: Sequelize.STRING},
 });
 
 const SessionPlayerModel = db.define('sessionPlayer', {
@@ -59,16 +60,12 @@ PlayerModel.hasMany(SessionPlayerModel);
 casual.seed(123);
 db.sync({ force: true }).then(() => {
   const maxPlayers = 20;
-  const maxClubs = 5;
+  const maxClubs = 30;
 
-    // Create a set of players
+  // Create a set of players
   Promise.all(
-        _.times(maxPlayers, () => {
-          return PlayerModel.create({
-            name: casual.full_name,
-          });
-        }),
-      )
+    _.times(maxPlayers, () => PlayerModel.create({ name: casual.full_name, }))
+  )
 
     // Create some clubs
     .then((players) => {
@@ -80,7 +77,8 @@ db.sync({ force: true }).then(() => {
             // With one session
             .then((club) => {
               return club.createSession({
-                title: `A session for ${club.name}`,
+                title: `${casual.last_name} Cup`,
+                date: casual.date('YYYY-MM-DD'),
               });
             })
 
