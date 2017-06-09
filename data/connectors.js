@@ -160,7 +160,7 @@ db.sync({ force: true }).then(() => {
                   denomination: 'NT',
                   risk: 'X',
                   declaror: 'W',
-                  score: -50,
+                  score: -100,
                   made: -2,
                 }))
                 ;
@@ -185,6 +185,24 @@ const FortuneCookie = {
         return res[0].fortune.message;
       });
   },
+};
+
+const DoubleDummy = {
+    solve(board) {
+        let options = {
+            url: 'http://dds-3.apphb.com/api/contracts',
+            qs: {
+                pbn: board.deal
+            }
+        };
+        return rp(options)
+            .then(res => JSON.parse(res))
+            .catch(e => {
+                console.error('DDS failure');
+                console.error(e);
+                throw e;
+            });
+    },
 };
 
 const SessionPair = {};
@@ -220,4 +238,4 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
   return Object.getOwnPropertyNames(map).map(val => map[val]);
 };
 
-export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, FortuneCookie };
+export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, FortuneCookie, DoubleDummy };

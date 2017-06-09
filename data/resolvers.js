@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie, DoubleDummy } from './connectors';
 
 const resolvers = {
   Query: {
@@ -81,6 +81,18 @@ const resolvers = {
     games(board) {
       return board.getGames();
     },
+    solutions(board) {
+        return DoubleDummy
+            .solve(board)
+            .then(contracts => contracts.map(c => {
+                return {
+                    risk: '',
+                    level: c.level,
+                    denomination: c.denomination[0].toUpperCase(),
+                    declaror: c.declaror[0].toUpperCase(),
+                };
+            }));
+    }
   },
 
   Game: {

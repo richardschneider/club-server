@@ -25,6 +25,7 @@
   ],
   "dependencies": {
     "body-parser": "^1.15.2",
+    "bridge-scorer": "^2.2.1",
     "bridge.js": "^2.1.0",
     "casual": "^1.5.2",
     "compression": "^1.6.2",

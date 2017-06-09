@@ -49,6 +49,7 @@ type Board {
   vulnerability: String
   deal: String
   games: [Game]
+  solutions: [Contract]
 }
 
 type Game {
