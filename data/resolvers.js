@@ -88,7 +88,7 @@ const resolvers = {
                 return {
                     risk: '',
                     level: c.level,
-                    denomination: c.denomination[0].toUpperCase(),
+                    denomination: c.denomination === 'noTrumps' ? 'NT' : c.denomination[0].toUpperCase(),
                     declaror: c.declaror[0].toUpperCase(),
                 };
             }));
