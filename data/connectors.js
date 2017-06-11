@@ -172,7 +172,7 @@ db.sync({ force: true }).then(() => {
                   ns: 2,
                   ew: 2,
                   level: 3,
-                  denomination: 'NT',
+                  denomination: 'H',
                   risk: 'X',
                   declaror: 'W',
                   score: -100,
