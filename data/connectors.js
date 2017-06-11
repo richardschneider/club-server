@@ -166,6 +166,7 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -50,
                   made: -1,
+                  lead: 'SK',
                 })
                 .then(() => board.createGame({
                   ns: 2,
@@ -176,6 +177,7 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -100,
                   made: -2,
+                  lead: 'D8'
                 }))
                 ;
               }));
