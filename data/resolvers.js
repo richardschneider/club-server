@@ -107,26 +107,37 @@ const resolvers = {
         declaror: game.declaror,
       };
     },
-    scoreNS(game) {
-      return (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score;
-    },
-    scoreEW(game) {
-      return (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score;
-    },
     NS(game) {
-      return game.getBoard()
-            .then(board => board.getSession())
-            .then(session => SessionPair.getPair(session, 'NS', game.ns))
-        ;
+      return {
+          game: game,
+          pairNumber: game.ns,
+          direction: 'NS',
+          score: (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score,
+          matchpoints: 4.5,
+          matchpointsPercentage: 50.00
+      };
     },
     EW(game) {
-      return game.getBoard()
-            .then(board => board.getSession())
-            .then(session => SessionPair.getPair(session, 'EW', game.ew))
-        ;
+      return {
+          game: game,
+          pairNumber: game.ew,
+          direction: 'EW',
+          score: (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score,
+          matchpoints: 4.5,
+          matchpointsPercentage: 50.00
+      };
     },
   },
 
+  GamePairResult: {
+    pair(gamePairResult) {
+      return gamePairResult.game.getBoard()
+            .then(board => board.getSession())
+            .then(session => SessionPair.getPair(session, gamePairResult.direction, gamePairResult.pairNumber))
+        ;
+    },
+
+  },
 };
 
 export default resolvers;

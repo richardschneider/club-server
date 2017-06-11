@@ -41,6 +41,7 @@ const GameModel = db.define('game', {
   denomination: { type: Sequelize.STRING },
   risk: { type: Sequelize.STRING },
   declaror: { type: Sequelize.STRING },
+  lead: { type: Sequelize.STRING },
   score: { type: Sequelize.INTEGER },
   made: { type: Sequelize.INTEGER },
 });
@@ -74,11 +75,24 @@ db.sync({ force: true }).then(() => {
           name: casual.city,
         })
 
-            // With one session
+            .then((club) => {
+              let name = casual.last_name;
+              return club.createSession({
+                title: `${name} Cup (NP)`,
+                date: '2017-06-06',
+              })
+              .then(() => club.createSession({
+                title: `${name} Cup (NP)`,
+                date: '2017-06-13',
+              }))
+              .then(() => club);
+            })
+
+          // With one played session
             .then((club) => {
               return club.createSession({
                 title: `${casual.last_name} Cup`,
-                date: casual.date('YYYY-MM-DD'),
+                date: '2017-06-04',
               });
             })
 
