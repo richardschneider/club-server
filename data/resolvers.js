@@ -123,6 +123,7 @@ const resolvers = {
           score: (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score,
           matchpoints: game.matchpointsNS,
           matchpointsPercentage: game.matchpointsPercentageNS,
+          imps: game.impsNS,
       };
     },
     EW(game) {
@@ -133,6 +134,7 @@ const resolvers = {
           score: (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score,
           matchpoints: game.matchpointsEW,
           matchpointsPercentage: game.matchpointsPercentageEW,
+          imps: game.impsEW
       };
     },
   },

@@ -26,6 +26,26 @@ const scorers = {
     });
     return Promise.all(scoredGames);
   },
+  crossImps (games) {
+    scorer.crossImps(games);
+    let scoredGames = games.map(g => {
+        let game = g.game;
+        game.impsNS = g.impsNS.value;
+        game.impsEW = g.impsEW.value;
+        return game.save();
+    });
+    return Promise.all(scoredGames);
+  },
+  butler (games) {
+    scorer.butler(games);
+    let scoredGames = games.map(g => {
+        let game = g.game;
+        game.impsNS = g.impsNS.value;
+        game.impsEW = g.impsEW.value;
+        return game.save();
+    });
+    return Promise.all(scoredGames);
+  },
 };
 
 function scoreBoard (board, algorithm) {
