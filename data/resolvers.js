@@ -1,4 +1,5 @@
 import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie, DoubleDummy } from './connectors';
+import score from './score';
 
 const resolvers = {
   Query: {
@@ -23,6 +24,13 @@ const resolvers = {
     },
     getFortuneCookie() {
       return FortuneCookie.getOne();
+    },
+  },
+
+  Mutation: {
+    scoreSession(_, { id, scoring}) {
+      return Session.find({ where: {id: id} })
+        .then(session => score(session, scoring));
     },
   },
 
@@ -113,8 +121,8 @@ const resolvers = {
           pairNumber: game.ns,
           direction: 'NS',
           score: (game.declaror === 'N' || game.declaror === 'S') ? game.score : -game.score,
-          matchpoints: 4.5,
-          matchpointsPercentage: 50.00
+          matchpoints: game.matchpointsNS,
+          matchpointsPercentage: game.matchpointsPercentageNS,
       };
     },
     EW(game) {
@@ -123,8 +131,8 @@ const resolvers = {
           pairNumber: game.ew,
           direction: 'EW',
           score: (game.declaror === 'E' || game.declaror === 'W') ? game.score : -game.score,
-          matchpoints: 4.5,
-          matchpointsPercentage: 50.00
+          matchpoints: game.matchpointsEW,
+          matchpointsPercentage: game.matchpointsPercentageEW,
       };
     },
   },

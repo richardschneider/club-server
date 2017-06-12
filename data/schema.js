@@ -83,6 +83,13 @@ type Contract {
   risk: String
 }
 
+enum ScoringAlgorithm {
+  matchpoints
+  matchpointsACBL
+  crossImps
+  butler
+}
+
 type Query {
   clubs: [Club]
   club(id: ID!) : Club
@@ -92,8 +99,13 @@ type Query {
   getFortuneCookie: String
 }
 
+type Mutation {
+  scoreSession(id: ID!, scoring: ScoringAlgorithm!): Session
+}
+
 schema {
   query: Query
+  mutation: Mutation
 }
 `;
 

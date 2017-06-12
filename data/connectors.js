@@ -44,6 +44,10 @@ const GameModel = db.define('game', {
   lead: { type: Sequelize.STRING },
   score: { type: Sequelize.INTEGER },
   made: { type: Sequelize.INTEGER },
+  matchpointsNS : { type: Sequelize.FLOAT },
+  matchpointsEW : { type: Sequelize.FLOAT },
+  matchpointsPercentageNS : { type: Sequelize.FLOAT },
+  matchpointsPercentageEW : { type: Sequelize.FLOAT },
 });
 
 ClubModel.hasMany(SessionModel);
