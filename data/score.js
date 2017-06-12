@@ -3,15 +3,20 @@ import resolvers from './resolvers';
 
 const scorers = {
   matchpoints (games) {
-    let scored = games.map(g => {
-        return {
-            game: g,
-            score: g.score,
-            contract: resolvers.Game.contract(g)
-        };
+    scorer.matchpoints(games);
+    let scoredGames = games.map(g => {
+        let game = g.game;
+        game.matchpointsNS = g.matchpointsNS.value;
+        game.matchpointsPercentageNS = g.matchpointsNS.percentage;
+        game.matchpointsEW = g.matchpointsEW.value;
+        game.matchpointsPercentageEW = g.matchpointsEW.percentage;
+        return game.save();
     });
-    scorer.matchpoints(scored);
-    let scoredGames = scored.map(g => {
+    return Promise.all(scoredGames);
+  },
+  matchpointsACBL (games) {
+    scorer.matchpointsACBL(games);
+    let scoredGames = games.map(g => {
         let game = g.game;
         game.matchpointsNS = g.matchpointsNS.value;
         game.matchpointsPercentageNS = g.matchpointsNS.percentage;
@@ -27,7 +32,14 @@ function scoreBoard (board, algorithm) {
   return board
     .getGames()
     .then(games => {
-      return scorers[algorithm](games);
+        let scoredGames = games.map(g => {
+            return {
+                game: g,
+                score: g.score,
+                contract: resolvers.Game.contract(g)
+            };
+        });
+        return scorers[algorithm](scoredGames);
     });
 }
 
