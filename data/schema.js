@@ -36,6 +36,7 @@ type SessionPair {
   table: Int
   direction: String
   title: String
+  shortTitle: String
   name: String
   players: [Player]
   games: [Game]

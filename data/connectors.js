@@ -227,6 +227,11 @@ const DoubleDummy = {
     },
 };
 
+function shortName (name) {
+    let parts = name.split(' ');
+    return parts[parts.length - 1];
+}
+
 const SessionPair = {};
 SessionPair.getAll = function (session) {
   return session
@@ -255,6 +260,7 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
     const player = sp.player;
     pair.players.push(player);
     pair.title = pair.title ? `${pair.title} / ${player.name}` : player.name;
+    pair.shortTitle = pair.shortTitle ? `${pair.shortTitle}/${shortName(player.name)}` : shortName(player.name);
     map[name] = pair;
   });
   return Object.getOwnPropertyNames(map).map(val => map[val]);
