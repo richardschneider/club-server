@@ -238,6 +238,13 @@ SessionPair.getAll = function (session) {
         .getSessionPlayers({ include: [Player] })
         .then(sessionPlayers => SessionPair.fromSessionPlayers(session, sessionPlayers));
 };
+SessionPair.getPairById = function (id) {
+  let parts = id.split('-');
+  return SessionModel
+    .findById(parts[0])
+    .then(session => SessionPair.getPair(session, parts[1], parts[2]))
+  ;
+};
 SessionPair.getPair = function (session, direction, table) {
   const q = { table, seat: { $in: Array.from(direction) } };
   return session

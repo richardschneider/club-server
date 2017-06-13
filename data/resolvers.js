@@ -22,6 +22,9 @@ const resolvers = {
     session(_, args) {
       return Session.find({ where: args });
     },
+    sessionPair(_, args) {
+      return SessionPair.getPairById(args.id);
+    },
     getFortuneCookie() {
       return FortuneCookie.getOne();
     },

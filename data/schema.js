@@ -98,6 +98,7 @@ type Query {
   player(id: ID!) : Player
   board(id: ID!) : Board
   session(id: ID!) : Session
+  sessionPair(id: ID!) : SessionPair
   getFortuneCookie: String
 }
 
