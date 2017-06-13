@@ -32,6 +32,7 @@ type SessionPlayer {
 }
 
 type SessionPair {
+  id: ID
   session: Session
   table: Int
   direction: String

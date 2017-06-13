@@ -252,6 +252,7 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
     const direction = sp.seat === 'N' || sp.seat === 'S' ? 'NS' : 'EW';
     const name = direction + sp.table;
     const pair = map[name] || {
+      id: `${session.id}-${direction}-${sp.table}`,
       session,
       direction,
       name,
