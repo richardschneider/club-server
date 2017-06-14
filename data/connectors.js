@@ -27,6 +27,13 @@ const SessionPlayerModel = db.define('sessionPlayer', {
   table: { type: Sequelize.INTEGER },
 });
 
+const SessionPairModel = db.define('sessionPair', {
+  id: { type: Sequelize.STRING, primaryKey: true },
+  rank: { type: Sequelize.INTEGER },
+  tied: { type: Sequelize.BOOLEAN },
+  score: { type: Sequelize.FLOAT }
+});
+
 const BoardModel = db.define('board', {
   number: { type: Sequelize.INTEGER },
   dealer: { type: Sequelize.STRING },
