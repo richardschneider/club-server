@@ -254,6 +254,7 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
       direction,
       name,
       table: sp.table,
+      ranking: { rank: 1, tied: true, score: 53.12 },
       players: [] };
     const player = sp.player;
     pair.players.push(player);

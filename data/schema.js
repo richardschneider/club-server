@@ -12,6 +12,17 @@ type Player {
   name: String
 }
 
+type Ranking {
+  # position in the ladder
+  rank: Int
+
+  # tied with another player(s)
+  tied: Boolean
+
+  # score used to calculate rank
+  score: Float
+}
+
 type Session {
   id: ID
   title: String
@@ -38,6 +49,7 @@ type SessionPair {
   direction: String
   title: String
   shortTitle: String
+  ranking: Ranking
   name: String
   players: [Player]
   games: [Game]
