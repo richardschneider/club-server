@@ -4,9 +4,9 @@ import _ from 'lodash';
 import rp from 'request-promise';
 import bridge from 'bridge.js';
 
-const db = new Sequelize('blog', null, null, {
+const db = new Sequelize('bridge-club', null, null, {
   dialect: 'sqlite',
-  storage: './blog.sqlite',
+  storage: './bridge-club.sqlite',
 });
 
 const ClubModel = db.define('club', {
