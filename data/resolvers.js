@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, Game, FortuneCookie, DoubleDummy } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game, DoubleDummy } from './connectors';
 import score from './score';
 
 const resolvers = {
@@ -24,9 +24,6 @@ const resolvers = {
     },
     sessionPair(_, args) {
       return SessionPair.getPairById(args.id);
-    },
-    getFortuneCookie() {
-      return FortuneCookie.getOne();
     },
   },
 

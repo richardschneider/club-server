@@ -199,16 +199,6 @@ const SessionPlayer = db.models.session;
 const Board = db.models.board;
 const Game = db.models.game;
 
-const FortuneCookie = {
-  getOne() {
-    return rp('http://fortunecookieapi.com/v1/cookie')
-      .then(res => JSON.parse(res))
-      .then((res) => {
-        return res[0].fortune.message;
-      });
-  },
-};
-
 const DoubleDummy = {
     solve(board) {
         let options = {
@@ -274,4 +264,4 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
   return Object.getOwnPropertyNames(map).map(val => map[val]);
 };
 
-export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, FortuneCookie, DoubleDummy };
+export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, DoubleDummy };

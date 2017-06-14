@@ -99,7 +99,6 @@ type Query {
   board(id: ID!) : Board
   session(id: ID!) : Session
   sessionPair(id: ID!) : SessionPair
-  getFortuneCookie: String
 }
 
 type Mutation {
