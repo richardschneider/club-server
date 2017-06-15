@@ -12,6 +12,7 @@ type Player {
   name: String
 }
 
+# the order in a competition
 type Ranking {
   # position in the ladder
   rank: Int

@@ -1,5 +1,6 @@
 import scorer from 'bridge-scorer';
 import resolvers from './resolvers';
+import { Board, Game, SessionPairResult } from './connectors';
 
 const scorers = {
   matchpoints (games) {
@@ -63,6 +64,74 @@ function scoreBoard (board, algorithm) {
     });
 }
 
+function rankPairs(session) {
+  return Promise.resolve()
+    // Get all games for the session
+    .then(() => Game.findAll({include: [{ model: Board, where: { sessionId: session.id } }]}))
+
+    // Rank the pairs
+    .then(games => {
+      let pairs = {};
+
+      // Get the total for each pair
+      games.forEach(game => {
+        let nsId = `${session.id}-ns-${game.ns}`;
+        let ns = pairs[nsId] || { total: 0, played: 0, direction: 'NS' };
+        pairs[nsId] = ns;
+        ns.played += 1;
+        ns.total += game.matchpointsPercentageNS;
+
+        let ewId = `${session.id}-ew-${game.ew}`;
+        let ew = pairs[ewId] || { total: 0, played: 0, direction: 'EW' };
+        pairs[ewId] = ew;
+        ew.played += 1;
+        ew.total += game.matchpointsPercentageEW;
+      });
+
+      // Get score (total / games played) for each pair
+      for (var pairname in pairs) {
+        let pair = pairs[pairname];
+        pair.score = pair.total / pair.played;
+      }
+
+      // Rank NS pairs
+      let nsPairs = Object.getOwnPropertyNames(pairs)
+        .map(val => pairs[val])
+        .filter(pair => pair.direction === 'NS');
+      scorer.rank(nsPairs);
+
+      // Rank EW pairs
+      let ewPairs = Object.getOwnPropertyNames(pairs)
+        .map(val => pairs[val])
+        .filter(pair => pair.direction === 'EW');
+      scorer.rank(ewPairs);
+
+      // All pairs as an array
+      return Object.getOwnPropertyNames(pairs)
+        .map(val => {
+          let pair = pairs[val];
+          pair.id = val;
+          let rank = pair.rank;
+          pair.tied = rank.endsWith('=');
+          pair.rank = parseFloat(rank);
+          return pair;
+      });
+    })
+
+    // Update pair ranking
+    .then(pairs => {
+      return Promise.all(pairs.map(pair => {
+        return SessionPairResult.upsert({
+          id: pair.id,
+          rank: pair.rank,
+          tied: pair.tied,
+          score: pair.score
+        });
+      }));
+    })
+  ;
+}
+
 function score(session, algorithm) {
   if (!scorer[algorithm]) {
       throw new Error(`Scoring ${algorithm} is not defined`);
@@ -74,6 +143,7 @@ function score(session, algorithm) {
   return session
     .getBoards()
     .then(boards => Promise.all(boards.map(board => scoreBoard(board, algorithm))))
+    .then(() => rankPairs(session))
     .then(() => session);
 }
 

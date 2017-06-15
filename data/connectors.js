@@ -27,7 +27,7 @@ const SessionPlayerModel = db.define('sessionPlayer', {
   table: { type: Sequelize.INTEGER },
 });
 
-const SessionPairModel = db.define('sessionPair', {
+/* const SessionPairResultModel = */ db.define('sessionPairResult', {
   id: { type: Sequelize.STRING, primaryKey: true },
   rank: { type: Sequelize.INTEGER },
   tied: { type: Sequelize.BOOLEAN },
@@ -203,6 +203,7 @@ const Club = db.models.club;
 const Player = db.models.player;
 const Session = db.models.session;
 const SessionPlayer = db.models.session;
+const SessionPairResult = db.models.sessionPairResult;
 const Board = db.models.board;
 const Game = db.models.game;
 
@@ -272,4 +273,4 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
   return Object.getOwnPropertyNames(map).map(val => map[val]);
 };
 
-export { Club, Player, Session, SessionPlayer, SessionPair, Board, Game, DoubleDummy };
+export { Club, Player, Session, SessionPlayer, SessionPair, SessionPairResult, Board, Game, DoubleDummy };
