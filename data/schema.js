@@ -50,7 +50,7 @@ type SessionPair {
   direction: String
   title: String
   shortTitle: String
-  ranking: Ranking
+  ranking: Ranking!
   name: String
   players: [Player]
   games: [Game]

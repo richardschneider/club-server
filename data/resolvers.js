@@ -81,7 +81,9 @@ const resolvers = {
       });
     },
     ranking(sessionPair) {
-      return SessionPairResult.findById(sessionPair.id);
+      return SessionPairResult
+        .findById(sessionPair.id)
+        .then(ranking => ranking || { rank: 0, score: 0, tied: false });
     }
   },
 
