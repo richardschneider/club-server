@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, Game, DoubleDummy } from './connectors';
+import { Club, Player, Session, SessionPair, SessionPairResult, Board, Game, DoubleDummy } from './connectors';
 import score from './score';
 
 const resolvers = {
@@ -80,6 +80,9 @@ const resolvers = {
         include: [{ model: Board, where: { sessionId } }],
       });
     },
+    ranking(sessionPair) {
+      return SessionPairResult.findById(sessionPair.id);
+    }
   },
 
   Board: {

@@ -75,13 +75,13 @@ function rankPairs(session) {
 
       // Get the total for each pair
       games.forEach(game => {
-        let nsId = `${session.id}-ns-${game.ns}`;
+        let nsId = `${session.id}-NS-${game.ns}`;
         let ns = pairs[nsId] || { total: 0, played: 0, direction: 'NS' };
         pairs[nsId] = ns;
         ns.played += 1;
         ns.total += game.matchpointsPercentageNS;
 
-        let ewId = `${session.id}-ew-${game.ew}`;
+        let ewId = `${session.id}-EW-${game.ew}`;
         let ew = pairs[ewId] || { total: 0, played: 0, direction: 'EW' };
         pairs[ewId] = ew;
         ew.played += 1;
