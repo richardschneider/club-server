@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
-import rp from 'request-promise';
 import bridge from 'bridge.js';
 
 const db = new Sequelize('bridge-club', null, null, {
@@ -207,24 +206,6 @@ const SessionPairResult = db.models.sessionPairResult;
 const Board = db.models.board;
 const Game = db.models.game;
 
-const DoubleDummy = {
-    solve(board) {
-        let options = {
-            url: 'http://dds-3.apphb.com/api/contracts',
-            qs: {
-                pbn: board.deal
-            }
-        };
-        return rp(options)
-            .then(res => JSON.parse(res))
-            .catch(e => {
-                console.error('DDS failure');
-                console.error(e);
-                throw e;
-            });
-    },
-};
-
 function shortName (name) {
     let parts = name.split(' ');
     return parts[parts.length - 1];
@@ -272,4 +253,4 @@ SessionPair.fromSessionPlayers = function (session, sessionPlayers) {
   return Object.getOwnPropertyNames(map).map(val => map[val]);
 };
 
-export { Club, Player, Session, SessionPlayer, SessionPair, SessionPairResult, Board, Game, DoubleDummy };
+export { Club, Player, Session, SessionPlayer, SessionPair, SessionPairResult, Board, Game};
