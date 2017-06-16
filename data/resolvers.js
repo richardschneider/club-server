@@ -40,25 +40,7 @@ const resolvers = {
     },
   },
 
-  Session: {
-    club(session) {
-      return session.getClub();
-    },
-    boards(session) {
-      return session.getBoards();
-    },
-    games(session) {
-      return Game.findAll({
-        include: [{ model: Board, where: { sessionId: session.id } }],
-      });
-    },
-    players(session) {
-      return session.getSessionPlayers();
-    },
-    pairs(session) {
-      return SessionPair.getAll(session);
-    },
-  },
+  Session: require('../lib/session/resolver'),
 
   SessionPlayer: {
     player(sessionPlayer) {
