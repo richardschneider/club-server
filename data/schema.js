@@ -56,16 +56,7 @@ type SessionPair {
   games: [Game]
  }
 
-type Board {
-  id: ID
-  session: Session
-  number: Int
-  dealer: String
-  vulnerability: String
-  deal: String
-  games: [Game]
-  solutions: [Contract]
-}
+${require('../lib/board/graphql-schema')}
 
 type Game {
   id: ID

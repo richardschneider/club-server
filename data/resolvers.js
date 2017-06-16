@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, SessionPairResult, Board, Game, DoubleDummy } from './connectors';
+import { Club, Player, Session, SessionPair, SessionPairResult, Board, Game } from './connectors';
 import score from './score';
 
 const resolvers = {
@@ -87,26 +87,7 @@ const resolvers = {
     }
   },
 
-  Board: {
-    session(board) {
-      return board.getSession();
-    },
-    games(board) {
-      return board.getGames();
-    },
-    solutions(board) {
-        return DoubleDummy
-            .solve(board)
-            .then(contracts => contracts.map(c => {
-                return {
-                    risk: '',
-                    level: c.level,
-                    denomination: c.denomination === 'noTrumps' ? 'NT' : c.denomination[0].toUpperCase(),
-                    declaror: c.declaror[0].toUpperCase(),
-                };
-            }));
-    }
-  },
+  Board: require('../lib/board/resolver'),
 
   Game: {
     board(game) {
