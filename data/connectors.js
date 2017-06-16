@@ -2,11 +2,7 @@ import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
 import bridge from 'bridge.js';
-
-const db = new Sequelize('bridge-club', null, null, {
-  dialect: 'sqlite',
-  storage: './bridge-club.sqlite',
-});
+import db from '../lib/db';
 
 const ClubModel = db.define('club', {
   name: { type: Sequelize.STRING },
