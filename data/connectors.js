@@ -157,7 +157,7 @@ db.sync({ force: true }).then(() => {
                   number: b.number,
                   dealer: b.dealer.symbol,
                   vulnerability: b.vulnerability,
-                  deal: bridge.pbn.exportDeal(b.hands, b.dealer),
+                  deal: b.deal(),
                 });
               }));
             })
