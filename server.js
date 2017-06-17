@@ -7,11 +7,15 @@ import compression from 'compression';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 
 const GRAPHQL_PORT = 3001;
 
 const app = express();
 app.use(compression());
+app.use(fileUpload());
+
+app.use(require('./lib/session/routes'));
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
