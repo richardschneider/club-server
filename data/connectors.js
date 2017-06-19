@@ -69,7 +69,7 @@ PlayerModel.hasMany(SessionPlayerModel);
 casual.seed(123);
 db.sync({ force: true }).then(() => {
   const maxPlayers = 20;
-  const maxClubs = 30;
+  const maxClubs = 5;
 
   // Create a set of players
   Promise.all(
