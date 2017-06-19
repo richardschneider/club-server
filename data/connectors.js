@@ -14,11 +14,11 @@ const PlayerModel = db.define('player', {
 
 const SessionModel = db.define('session', {
   title: { type: Sequelize.STRING },
-  date: { type: Sequelize.STRING},
+  date: { type: Sequelize.CHAR(10)},
 });
 
 const SessionPlayerModel = db.define('sessionPlayer', {
-  seat: { type: Sequelize.STRING },
+  seat: { type: Sequelize.CHAR(1) },
   table: { type: Sequelize.INTEGER },
 });
 
@@ -31,8 +31,8 @@ const SessionPlayerModel = db.define('sessionPlayer', {
 
 const BoardModel = db.define('board', {
   number: { type: Sequelize.INTEGER },
-  dealer: { type: Sequelize.STRING },
-  vulnerability: { type: Sequelize.STRING },
+  dealer: { type: Sequelize.CHAR(1) },
+  vulnerability: { type: Sequelize.STRING(3) },
   deal: { type: Sequelize.STRING },
 });
 
@@ -40,10 +40,10 @@ const GameModel = db.define('game', {
   ns: { type: Sequelize.INTEGER },
   ew: { type: Sequelize.INTEGER },
   level: { type: Sequelize.INTEGER },
-  denomination: { type: Sequelize.STRING },
-  risk: { type: Sequelize.STRING },
-  declaror: { type: Sequelize.STRING },
-  lead: { type: Sequelize.STRING },
+  denomination: { type: Sequelize.STRING(2) },
+  risk: { type: Sequelize.STRING(2) },
+  declaror: { type: Sequelize.CHAR(1) },
+  lead: { type: Sequelize.CHAR(2) },
   score: { type: Sequelize.INTEGER },
   made: { type: Sequelize.INTEGER },
   matchpointsNS : { type: Sequelize.FLOAT },
