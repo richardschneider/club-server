@@ -1,5 +1,5 @@
-import { Club, Player, Session, SessionPair, SessionPairResult, Board, Game } from './connectors';
-import score from './score';
+import { Club, Player, Session, SessionPair, Board } from './connectors';
+import score from '../lib/session/score';
 
 const resolvers = {
   Query: {
@@ -48,27 +48,7 @@ const resolvers = {
     },
   },
 
-  SessionPair: {
-    games(sessionPair) {
-      const sessionId = sessionPair.session.id;
-      const q = {};
-      if (sessionPair.direction === 'NS') {
-        q.ns = sessionPair.table;
-      } else {
-        q.ew = sessionPair.table;
-      }
-      return Game.findAll({
-        where: q,
-        include: [{ model: Board, where: { sessionId } }],
-      });
-    },
-    ranking(sessionPair) {
-      return SessionPairResult
-        .findById(sessionPair.id)
-        .then(ranking => ranking || { rank: 0, score: 0, tied: false });
-    }
-  },
-
+  SessionPair: require('../lib/session-pair/resolver'),
   Board: require('../lib/board/resolver'),
   Game: require('../lib/game/resolver'),
 

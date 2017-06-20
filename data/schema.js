@@ -43,21 +43,9 @@ type SessionPlayer {
   seat: String
 }
 
-type SessionPair {
-  id: ID
-  session: Session
-  table: Int
-  direction: String
-  title: String
-  shortTitle: String
-  ranking: Ranking!
-  name: String
-  players: [Player]
-  games: [Game]
- }
-
-${require('../lib/board/graphql-schema')}
-${require('../lib/game/graphql-schema')}
+${require('../lib/session-pair/schema')}
+${require('../lib/board/schema')}
+${require('../lib/game/schema')}
 
 type GamePairResult {
   pair: SessionPair
