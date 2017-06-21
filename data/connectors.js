@@ -63,6 +63,7 @@ const GameModel = db.define('game', {
   matchpointsPercentageEW : { type: Sequelize.FLOAT },
   impsNS : { type: Sequelize.FLOAT },
   impsEW : { type: Sequelize.FLOAT },
+  sessionId : { type: Sequelize.INTEGER, allowNull: false},
   },
   { indexes: [
     { fields: ['boardId'] }
@@ -191,6 +192,7 @@ db.sync({ force: true }).then(() => {
                   score: -50,
                   made: -1,
                   lead: 'SK',
+                  sessionId: board.sessionId,
                 })
                 .then(() => board.createGame({
                   ns: 2,
@@ -201,7 +203,8 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -100,
                   made: -2,
-                  lead: 'D8'
+                  lead: 'D8',
+                  sessionId: board.sessionId,
                 }))
                 ;
               }));

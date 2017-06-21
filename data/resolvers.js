@@ -51,16 +51,7 @@ const resolvers = {
   SessionPair: require('../lib/session-pair/resolver'),
   Board: require('../lib/board/resolver'),
   Game: require('../lib/game/resolver'),
-
-  GamePairResult: {
-    pair(gamePairResult) {
-      return gamePairResult.game.getBoard()
-            .then(board => board.getSession())
-            .then(session => SessionPair.getPair(session, gamePairResult.direction, gamePairResult.pairNumber))
-        ;
-    },
-
-  },
+  GamePairResult: require('../lib/game-pair-result/resolver'),
 };
 
 export default resolvers;
