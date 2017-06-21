@@ -19,9 +19,14 @@ const SessionModel = db.define('session', {
 });
 
 const SessionPlayerModel = db.define('sessionPlayer', {
-  seat: { type: Sequelize.CHAR(1) },
+  seat: { type: Sequelize.CHAR(1), validate: { isIn: [['N', 'S', 'E', 'W']] } },
   table: { type: Sequelize.INTEGER },
-});
+  },
+  { indexes: [
+    { fields: ['sessionId'] },
+    { fields: ['sessionId', 'table', 'seat'], unique: true}
+  ] }
+);
 
 /* const SessionPairResultModel = */ db.define('sessionPairResult', {
   id: { type: Sequelize.STRING, primaryKey: true },
@@ -32,18 +37,23 @@ const SessionPlayerModel = db.define('sessionPlayer', {
 
 const BoardModel = db.define('board', {
   number: { type: Sequelize.INTEGER },
-  dealer: { type: Sequelize.CHAR(1) },
-  vulnerability: { type: Sequelize.STRING(3) },
+  dealer: { type: Sequelize.CHAR(1), validate: { isIn: [['N', 'S', 'E', 'W']] } },
+  vulnerability: { type: Sequelize.STRING(3), validate: { isIn: [['Nil', 'All', 'NS', 'EW']] } },
   deal: { type: Sequelize.STRING },
-});
+  },
+  { indexes: [
+    { fields: ['sessionId'] },
+    { fields: ['sessionId', 'number'], unique: true}
+  ] }
+);
 
 const GameModel = db.define('game', {
   ns: { type: Sequelize.INTEGER },
   ew: { type: Sequelize.INTEGER },
   level: { type: Sequelize.INTEGER },
-  denomination: { type: Sequelize.STRING(2) },
-  risk: { type: Sequelize.STRING(2) },
-  declaror: { type: Sequelize.CHAR(1) },
+  denomination: { type: Sequelize.STRING(2), validate: { isIn: [['S', 'H', 'D', 'C', 'NT']] } },
+  risk: { type: Sequelize.STRING(2), validate: { isIn: [['', 'X', 'XX']] } },
+  declaror: { type: Sequelize.CHAR(1), validate: { isIn: [['N', 'S', 'E', 'W']] } },
   lead: { type: Sequelize.CHAR(2) },
   score: { type: Sequelize.INTEGER },
   made: { type: Sequelize.INTEGER },
@@ -53,7 +63,12 @@ const GameModel = db.define('game', {
   matchpointsPercentageEW : { type: Sequelize.FLOAT },
   impsNS : { type: Sequelize.FLOAT },
   impsEW : { type: Sequelize.FLOAT },
-});
+  },
+  { indexes: [
+    { fields: ['boardId'] }
+  ] }
+);
+
 
 ClubModel.hasMany(SessionModel);
 SessionModel.belongsTo(ClubModel);
