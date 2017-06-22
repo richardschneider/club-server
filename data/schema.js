@@ -76,6 +76,7 @@ type Query {
   club(id: ID!) : Club
   player(id: ID!) : Player
   board(id: ID!) : Board
+  game(id: ID!) : Game
   session(id: ID!) : Session
   sessionPair(id: ID!) : SessionPair
 }

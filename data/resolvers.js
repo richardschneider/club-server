@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game } from './connectors';
 import score from '../lib/session/score';
 
 const resolvers = {
@@ -18,6 +18,9 @@ const resolvers = {
     },
     board(_, args) {
       return Board.find({ where: args });
+    },
+    game(_, args) {
+      return Game.find({ where: args });
     },
     session(_, args) {
       return Session.find({ where: args });
