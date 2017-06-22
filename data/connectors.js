@@ -32,7 +32,8 @@ const SessionPlayerModel = db.define('sessionPlayer', {
   id: { type: Sequelize.STRING, primaryKey: true },
   rank: { type: Sequelize.INTEGER },
   tied: { type: Sequelize.BOOLEAN },
-  score: { type: Sequelize.FLOAT }
+  score: { type: Sequelize.FLOAT },
+  scale: { type: Sequelize.FLOAT }
 });
 
 const BoardModel = db.define('board', {

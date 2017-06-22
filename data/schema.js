@@ -22,6 +22,8 @@ type Ranking {
 
   # score used to calculate rank
   score: Float
+
+  scale: Float
 }
 
 type Session {
