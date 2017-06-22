@@ -64,7 +64,8 @@ const GameModel = db.define('game', {
   matchpointsPercentageEW : { type: Sequelize.FLOAT },
   impsNS : { type: Sequelize.FLOAT },
   impsEW : { type: Sequelize.FLOAT },
-  sessionId : { type: Sequelize.INTEGER, allowNull: false},
+  sessionId : { type: Sequelize.INTEGER, allowNull: false },
+  auction: { type: Sequelize.STRING },
   },
   { indexes: [
     { fields: ['boardId'] }
