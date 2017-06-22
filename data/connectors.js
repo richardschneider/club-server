@@ -76,13 +76,14 @@ const GameModel = db.define('game', {
 ClubModel.hasMany(SessionModel);
 SessionModel.belongsTo(ClubModel);
 SessionModel.hasMany(BoardModel);
+SessionModel.hasMany(GameModel);
 SessionModel.hasMany(SessionPlayerModel);
 SessionPlayerModel.belongsTo(SessionModel);
 SessionPlayerModel.belongsTo(PlayerModel);
 BoardModel.belongsTo(SessionModel);
 BoardModel.hasMany(GameModel);
 GameModel.belongsTo(BoardModel);
-
+GameModel.belongsTo(SessionModel);
 PlayerModel.hasMany(SessionPlayerModel);
 
 casual.seed(123);
