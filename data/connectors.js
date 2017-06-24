@@ -55,7 +55,6 @@ const GameModel = db.define('game', {
   denomination: { type: Sequelize.STRING(2), validate: { isIn: [['S', 'H', 'D', 'C', 'NT']] } },
   risk: { type: Sequelize.STRING(2), validate: { isIn: [['', 'X', 'XX']] } },
   declaror: { type: Sequelize.CHAR(1), validate: { isIn: [['N', 'S', 'E', 'W']] } },
-  lead: { type: Sequelize.CHAR(2) },
   score: { type: Sequelize.INTEGER },
   made: { type: Sequelize.INTEGER },
   matchpointsNS : { type: Sequelize.FLOAT },
@@ -195,7 +194,7 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -50,
                   made: -1,
-                  lead: 'SK',
+                  play: 'SK',
                   sessionId: board.sessionId,
                 })
                 .then(() => board.createGame({
@@ -207,7 +206,7 @@ db.sync({ force: true }).then(() => {
                   declaror: 'W',
                   score: -100,
                   made: -2,
-                  lead: 'D8',
+                  play: 'D8',
                   sessionId: board.sessionId,
                 }))
                 ;
