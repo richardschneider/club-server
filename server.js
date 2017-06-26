@@ -9,7 +9,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 
-const GRAPHQL_PORT = 3001;
+const GRAPHQL_PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(compression());
