@@ -14,6 +14,7 @@ const GRAPHQL_PORT = 3001;
 const app = express();
 app.use(compression());
 app.use(fileUpload());
+app.use(express.static('public'));
 
 app.use(require('./lib/session/routes'));
 
