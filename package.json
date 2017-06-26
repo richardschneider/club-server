@@ -38,8 +38,7 @@
     "pg": "^6.4.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "sequelize": "^4.2.0",
-    "sqlite": "2.8.0"
+    "sequelize": "^4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -53,7 +52,8 @@
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-react": "^7.1.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "sqlite": "2.8.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
