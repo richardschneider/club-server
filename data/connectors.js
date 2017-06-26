@@ -21,7 +21,7 @@ const SessionPlayerModel = db.define('sessionPlayer', {
   },
   { indexes: [
     { fields: ['sessionId'] },
-    { fields: ['sessionId', 'table', 'seat'], unique: true}
+    { fields: ['sessionId', 'table', 'seat']}
   ] }
 );
 
