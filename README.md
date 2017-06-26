@@ -13,3 +13,4 @@ Set NODE_ENV to
 - 'ci' for continuous integration
 - 'dev' for develepment (the default)
 
+Set DATABASE_URL to a postgres database; otherwise, defaults to sqlite
