@@ -1,6 +1,7 @@
 import express from 'express';
 import Schema from './data/schema';
 import Resolvers from './data/resolvers';
+import db from './lib/db';
 import cors from 'cors';
 import compression from 'compression';
 
@@ -44,6 +45,10 @@ app.use(function (err, req, res, next) {
   res.status(400).send(err.message);
 });
 
-app.listen(GRAPHQL_PORT, () => console.log(
-  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}/graphql`
-));
+// Start the server once the database is abailable
+db.sync()
+  .then(() => {
+    console.log('database is ready');
+    app.listen(GRAPHQL_PORT, () => console.log(`Club server is now running on http://localhost:${GRAPHQL_PORT}/`));
+  })
+;
