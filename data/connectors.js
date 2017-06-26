@@ -83,8 +83,6 @@ GameModel.belongsTo(BoardModel);
 GameModel.belongsTo(SessionModel);
 PlayerModel.hasMany(SessionPlayerModel);
 
-db.sync();
-
 const Club = db.models.club;
 const Player = db.models.player;
 const Session = db.models.session;

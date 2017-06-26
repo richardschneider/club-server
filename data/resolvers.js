@@ -35,6 +35,9 @@ const resolvers = {
       return Session.find({ where: {id: id} })
         .then(session => score(session, scoring));
     },
+    createClub(_, { name }) {
+      return Club.create({ name: name});
+    },
   },
 
   Club: {

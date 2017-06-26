@@ -83,6 +83,7 @@ type Query {
 
 type Mutation {
   scoreSession(id: ID!, scoring: ScoringAlgorithm!): Session
+  createClub(name: String!) : Club
 }
 
 schema {
