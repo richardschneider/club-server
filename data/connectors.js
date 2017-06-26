@@ -3,15 +3,15 @@ import db from '../lib/db';
 import SessionPair from '../lib/session-pair/connector';
 
 const ClubModel = db.define('club', {
-  name: { type: Sequelize.STRING },
+  name: { type: Sequelize.STRING, validate: { notEmpty: true} },
 });
 
 const PlayerModel = db.define('player', {
-  name: { type: Sequelize.STRING },
+  name: { type: Sequelize.STRING, validate: { notEmpty: true} },
 });
 
 const SessionModel = db.define('session', {
-  title: { type: Sequelize.STRING },
+  title: { type: Sequelize.STRING, validate: { notEmpty: true} },
   date: { type: Sequelize.CHAR(10)},
 });
 

@@ -38,6 +38,10 @@ const resolvers = {
     createClub(_, { name }) {
       return Club.create({ name: name});
     },
+    createSession(_, { club, title, date}) {
+      return Club.findById(club)
+        .then(club => club.createSession({ title: title, date: date }));
+    },
   },
 
   Club: {
