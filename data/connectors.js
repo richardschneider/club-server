@@ -21,7 +21,7 @@ const SessionPlayerModel = db.define('sessionPlayer', {
   },
   { indexes: [
     { fields: ['sessionId'] },
-    { fields: ['sessionId', 'table', 'seat'], /* todo: unique: true */}
+    { fields: ['sessionId', 'table', 'seat'] }  // TODO: should be unique, see https://github.com/richardschneider/club-server/issues/3
   ] }
 );
 
@@ -41,7 +41,7 @@ const BoardModel = db.define('board', {
   },
   { indexes: [
     { fields: ['sessionId'] },
-    { fields: ['sessionId', 'number'], /* unique: true */}
+    { fields: ['sessionId', 'number'] } // TODO: should be unique, see https://github.com/richardschneider/club-server/issues/3
   ] }
 );
 
