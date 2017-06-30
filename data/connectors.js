@@ -10,7 +10,7 @@ const PlayerModel = db.define('player', {
   name: { type: Sequelize.STRING, validate: { notEmpty: true} },
 });
 
-/* const AddressModel = */ db.define('address', {
+const AddressModel = db.define('address', {
     name:  { type: Sequelize.STRING },
     city:  { type: Sequelize.STRING },
     administrative:  { type: Sequelize.STRING },
@@ -81,7 +81,7 @@ const GameModel = db.define('game', {
   ] }
 );
 
-
+ClubModel.belongsTo(AddressModel);
 ClubModel.hasMany(SessionModel);
 SessionModel.belongsTo(ClubModel);
 SessionModel.hasMany(BoardModel);
@@ -97,7 +97,7 @@ PlayerModel.hasMany(SessionPlayerModel);
 
 const Club = db.models.club;
 const Player = db.models.player;
-const Address = db.model.address;
+const Address = db.models.address;
 const Session = db.models.session;
 const SessionPlayer = db.models.sessionPlayer;
 const SessionPairResult = db.models.sessionPairResult;

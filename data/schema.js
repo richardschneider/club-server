@@ -1,12 +1,5 @@
 const typeDefinitions = `
 
-
-type Club {
-  id: ID
-  name: String
-  sessions: [Session]
-}
-
 type Player {
   id: ID
   name: String
@@ -45,6 +38,7 @@ type SessionPlayer {
   seat: String
 }
 
+${require('../lib/club/schema')}
 ${require('../lib/session-pair/schema')}
 ${require('../lib/board/schema')}
 ${require('../lib/game/schema')}

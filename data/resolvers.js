@@ -44,12 +44,7 @@ const resolvers = {
     },
   },
 
-  Club: {
-    sessions(club) {
-      return club.getSessions();
-    },
-  },
-
+  Club: require('../lib/club/resovler'),
   Session: require('../lib/session/resolver'),
 
   SessionPlayer: {
