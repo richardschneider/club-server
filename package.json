@@ -15,7 +15,8 @@
     "url": "https://github.com/richardschneider/club-server"
   },
   "scripts": {
-    "start": "nodemon ./server.js --exec babel-node",
+    "migrate": "db-migrate up",
+    "start": "db-migrate up && nodemon ./server.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
@@ -48,6 +49,8 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "6.24.1",
+    "db-migrate": "^0.10.0-beta.20",
+    "db-migrate-pg": "^0.2.4",
     "eslint": "^4.1.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.6.0",

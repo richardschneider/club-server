@@ -48,6 +48,7 @@ type SessionPlayer {
 ${require('../lib/session-pair/schema')}
 ${require('../lib/board/schema')}
 ${require('../lib/game/schema')}
+${require('../lib/address/schema')}
 
 type GamePairResult {
   pair: SessionPair

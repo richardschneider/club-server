@@ -10,6 +10,18 @@ const PlayerModel = db.define('player', {
   name: { type: Sequelize.STRING, validate: { notEmpty: true} },
 });
 
+/* const AddressModel = */ db.define('address', {
+    name:  { type: Sequelize.STRING },
+    city:  { type: Sequelize.STRING },
+    administrative:  { type: Sequelize.STRING },
+    country:  { type: Sequelize.STRING },
+    countryCode:  { type: Sequelize.STRING },
+    lat: { type: Sequelize.FLOAT },
+    lng: { type: Sequelize.FLOAT },
+    postcode: { type: Sequelize.STRING },
+    title:  { type: Sequelize.STRING }
+});
+
 const SessionModel = db.define('session', {
   title: { type: Sequelize.STRING, validate: { notEmpty: true} },
   date: { type: Sequelize.CHAR(10)},
@@ -85,10 +97,11 @@ PlayerModel.hasMany(SessionPlayerModel);
 
 const Club = db.models.club;
 const Player = db.models.player;
+const Address = db.model.address;
 const Session = db.models.session;
 const SessionPlayer = db.models.sessionPlayer;
 const SessionPairResult = db.models.sessionPairResult;
 const Board = db.models.board;
 const Game = db.models.game;
 
-export { Club, Player, Session, SessionPlayer, SessionPair, SessionPairResult, Board, Game};
+export { Club, Player, Session, SessionPlayer, SessionPair, SessionPairResult, Board, Game, Address};
