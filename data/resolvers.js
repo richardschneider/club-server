@@ -1,5 +1,6 @@
 import { Club, Player, Session, SessionPair, Board, Game } from './connectors';
 import score from '../lib/session/score';
+import clubUpdate from '../lib/club/update';
 
 const resolvers = {
   Query: {
@@ -41,6 +42,9 @@ const resolvers = {
     createSession(_, { club, title, date}) {
       return Club.findById(club)
         .then(club => club.createSession({ title: title, date: date }));
+    },
+    updateClub(_, { id, input }) {
+      return clubUpdate(id, input);
     },
   },
 

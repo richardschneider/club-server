@@ -78,6 +78,7 @@ type Query {
 
 type Mutation {
   createClub(name: String!) : Club
+  updateClub(id: ID!, input: ClubInput) : Club
   createSession(club: ID!, title: String!, date: String!) : Session
   scoreSession(id: ID!, scoring: ScoringAlgorithm!): Session
 }
