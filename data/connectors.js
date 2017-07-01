@@ -3,7 +3,8 @@ import db from '../lib/db';
 import SessionPair from '../lib/session-pair/connector';
 
 const ClubModel = db.define('club', {
-  name: { type: Sequelize.STRING, validate: { notEmpty: true} },
+  name: { type: Sequelize.STRING, validate: { notEmpty: true } },
+  email: { type: Sequelize.STRING },
 });
 
 const PlayerModel = db.define('player', {
