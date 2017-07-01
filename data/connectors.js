@@ -5,6 +5,7 @@ import SessionPair from '../lib/session-pair/connector';
 const ClubModel = db.define('club', {
   name: { type: Sequelize.STRING, validate: { notEmpty: true } },
   email: { type: Sequelize.STRING },
+  phone: { type: Sequelize.STRING },
 });
 
 const PlayerModel = db.define('player', {
