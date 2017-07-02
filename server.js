@@ -17,6 +17,7 @@ app.use(compression());
 app.use(fileUpload());
 app.use(express.static('public'));
 
+app.use(require('./lib/club/routes'));
 app.use(require('./lib/session/routes'));
 
 const executableSchema = makeExecutableSchema({
