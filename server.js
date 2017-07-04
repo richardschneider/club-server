@@ -10,6 +10,8 @@ import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 
+const passport = require('passport');
+
 const GRAPHQL_PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -17,6 +19,9 @@ app.use(compression());
 app.use(fileUpload());
 app.use(express.static('public'));
 
+app.use(passport.initialize());
+
+app.use(cors(), bodyParser.json(), require('./lib/auth/routes'));
 app.use(require('./lib/club/routes'));
 app.use(require('./lib/session/routes'));
 
