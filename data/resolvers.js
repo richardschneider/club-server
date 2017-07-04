@@ -1,6 +1,7 @@
 import { Club, Player, Session, SessionPair, Board, Game } from './connectors';
 import score from '../lib/session/score';
 import clubUpdate from '../lib/club/update';
+import userCreate from '../lib/user/create';
 
 const resolvers = {
   Query: {
@@ -35,6 +36,9 @@ const resolvers = {
     scoreSession(_, { id, scoring}) {
       return Session.find({ where: {id: id} })
         .then(session => score(session, scoring));
+    },
+    createUser(_, { name, email }) {
+      return userCreate(name, email);
     },
     createClub(_, { name }) {
       return Club.create({ name: name});

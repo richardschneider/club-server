@@ -38,6 +38,7 @@ type SessionPlayer {
   seat: String
 }
 
+${require('../lib/user/schema')}
 ${require('../lib/club/schema')}
 ${require('../lib/session-pair/schema')}
 ${require('../lib/board/schema')}
@@ -77,6 +78,10 @@ type Query {
 }
 
 type Mutation {
+  createUser(
+    name: String!
+    email: String!
+    password: String!) : User
   createClub(name: String!) : Club
   updateClub(id: ID!, input: ClubInput) : Club
   createSession(club: ID!, title: String!, date: String!) : Session
