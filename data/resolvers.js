@@ -37,8 +37,8 @@ const resolvers = {
       return Session.find({ where: {id: id} })
         .then(session => score(session, scoring));
     },
-    createUser(_, { name, email }) {
-      return userCreate(name, email);
+    createUser(_, { name, email, password }) {
+      return userCreate(name, email, password);
     },
     createClub(_, { name }) {
       return Club.create({ name: name});

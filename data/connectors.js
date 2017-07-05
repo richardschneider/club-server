@@ -10,7 +10,8 @@ const ClubModel = db.define('club', {
 
 /* const UserModel = */ db.define('user', {
   name: { type: Sequelize.STRING, allowNull: false, validate: { notEmpty: true } },
-  email: { type: Sequelize.STRING, allowNull: false, validate: { notEmpty: true } },
+  email: { type: Sequelize.STRING, allowNull: false, validate: { notEmpty: true, isEmail: true } },
+  password: { type: Sequelize.STRING },
 });
 
 const PlayerModel = db.define('player', {
