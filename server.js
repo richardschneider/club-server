@@ -14,6 +14,17 @@ const passport = require('passport');
 
 const GRAPHQL_PORT = process.env.PORT || 3001;
 
+const env = process.env.NODE_ENV || 'dev';
+
+if (!process.env.BASE_URL) {
+  if (env === 'dev') {
+    process.env.BASE_URL = `http://localhost:${GRAPHQL_PORT}/`;
+  }
+  else {
+    throw new Error('Missing environment BASE_URL');
+  }
+}
+
 const app = express();
 app.use(compression());
 app.use(fileUpload());
@@ -56,6 +67,6 @@ app.use(function (err, req, res, next) {
 db.sync()
   .then(() => {
     console.log('database is ready');
-    app.listen(GRAPHQL_PORT, () => console.log(`Club server is now running on http://localhost:${GRAPHQL_PORT}/`));
+    app.listen(GRAPHQL_PORT, () => console.log(`Club server is now running on ${process.env.BASE_URL}`));
   })
 ;

@@ -15,7 +15,9 @@ Set `NODE_ENV` to
 - 'ci' for continuous integration
 - 'dev' for develepment (the default)
 
-Set `DATABASE_URL` to a postgres database; otherwise, defaults to sqlite; for example `postgresql://user:pswd@localhost/bridge`.
+Set `BASE_URL` to the URL of the server; for example `https://club-server.herokuapp.com/`.  In dev mode this defaults to localhost and the port.
+
+Set `DATABASE_URL` to a postgres database; otherwise, defaults to sqlite; for example `postgresql://user:pswd@localhost/bridge`
 
 To support Google logins, set
 - `GOOGLE_CLIENT_ID`
