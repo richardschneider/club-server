@@ -21,7 +21,8 @@ app.use(express.static('public'));
 
 app.use(passport.initialize());
 
-app.use(cors(), bodyParser.json(), require('./lib/auth/routes'));
+app.use(cors(), bodyParser.json(), require('./lib/auth/local'));
+app.use(require('./lib/auth/google'));
 app.use(require('./lib/club/routes'));
 app.use(require('./lib/session/routes'));
 
@@ -48,7 +49,7 @@ app.use(function (err, req, res, next) {
     return next(err);
   }
 
-  res.status(400).send(err.message);
+  res.status(500).send(err.message);
 });
 
 // Start the server once the database is abailable

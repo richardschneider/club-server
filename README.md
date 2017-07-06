@@ -6,11 +6,17 @@ A multi-tenant bridge club server.  Automatically deployed to [https://club-serv
 - access is via [GraphQL](http://graphql.org/)
 - saves a session (event, competition) via PBN
 
-## Configutation
+## Configuration
 
-Set NODE_ENV to 
+You need to set the following environment variables.
+
+Set `NODE_ENV` to 
 - 'production' for a production system
 - 'ci' for continuous integration
 - 'dev' for develepment (the default)
 
-Set DATABASE_URL to a postgres database; otherwise, defaults to sqlite
+Set `DATABASE_URL` to a postgres database; otherwise, defaults to sqlite; for example `postgresql://user:pswd@localhost/bridge`.
+
+To support Google logins, set
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
