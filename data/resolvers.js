@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, Game } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game, User } from './connectors';
 import score from '../lib/session/score';
 import clubUpdate from '../lib/club/update';
 import userCreate from '../lib/user/create';
@@ -11,6 +11,9 @@ const resolvers = {
           ['name', 'ASC']
         ],
       });
+    },
+    user(_, args) {
+      return User.find({ where: args });
     },
     club(_, args) {
       return Club.find({ where: args });

@@ -69,6 +69,7 @@ enum ScoringAlgorithm {
 
 type Query {
   clubs: [Club]
+  user(id: ID!) : User
   club(id: ID!) : Club
   player(id: ID!) : Player
   board(id: ID!) : Board
