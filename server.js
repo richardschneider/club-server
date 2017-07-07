@@ -21,7 +21,7 @@ if (!process.env.BASE_URL) {
     process.env.BASE_URL = `http://localhost:${GRAPHQL_PORT}/`;
   }
   else {
-    throw new Error('Missing environment BASE_URL');
+    throw new Error('Missing environment variable BASE_URL');
   }
 }
 

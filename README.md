@@ -22,3 +22,5 @@ Set `DATABASE_URL` to a postgres database; otherwise, defaults to sqlite; for ex
 To support Google logins, set
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
+
+Set `JWT_SECRET` to the encyrption secret for the json web token.
