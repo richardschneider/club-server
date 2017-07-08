@@ -1,4 +1,4 @@
-import { Club, Player, Session, SessionPair, Board, Game, User } from './connectors';
+import { Club, Player, Session, SessionPair, Board, Game, User, Competition } from './connectors';
 import score from '../lib/session/score';
 import clubUpdate from '../lib/club/update';
 import userCreate from '../lib/user/create';
@@ -13,22 +13,25 @@ const resolvers = {
       });
     },
     user(_, args) {
-      return User.find({ where: args });
+      return User.findOne({ where: args });
     },
     club(_, args) {
-      return Club.find({ where: args });
+      return Club.findOne({ where: args });
+    },
+    competition(_, args) {
+      return Competition.findOne({ where: args });
     },
     player(_, args) {
-      return Player.find({ where: args });
+      return Player.findOne({ where: args });
     },
     board(_, args) {
-      return Board.find({ where: args });
+      return Board.findOne({ where: args });
     },
     game(_, args) {
-      return Game.find({ where: args });
+      return Game.findOne({ where: args });
     },
     session(_, args) {
-      return Session.find({ where: args });
+      return Session.findOne({ where: args });
     },
     sessionPair(_, args) {
       return SessionPair.getPairById(args.id);
@@ -56,6 +59,7 @@ const resolvers = {
   },
 
   Club: require('../lib/club/resovler'),
+  Competition: require('../lib/competition/resolver'),
   Session: require('../lib/session/resolver'),
 
   SessionPlayer: {

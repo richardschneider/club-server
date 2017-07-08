@@ -19,17 +19,6 @@ type Ranking {
   scale: Float
 }
 
-type Session {
-  id: ID
-  title: String
-  date: String
-  club: Club
-  boards: [Board]
-  games: [Game]
-  pairs: [SessionPair]
-  players: [SessionPlayer]
-}
-
 type SessionPlayer {
   id: ID
   session: Session
@@ -39,6 +28,8 @@ type SessionPlayer {
 }
 
 ${require('../lib/user/schema')}
+${require('../lib/competition/schema')}
+${require('../lib/session/schema')}
 ${require('../lib/club/schema')}
 ${require('../lib/session-pair/schema')}
 ${require('../lib/board/schema')}
@@ -71,6 +62,7 @@ type Query {
   clubs: [Club]
   user(id: ID!) : User
   club(id: ID!) : Club
+  competition(id: ID!) : Competition
   player(id: ID!) : Player
   board(id: ID!) : Board
   game(id: ID!) : Game
