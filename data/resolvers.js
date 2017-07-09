@@ -2,6 +2,7 @@ import { Club, Player, Session, SessionPair, Board, Game, User, Competition } fr
 import score from '../lib/session/score';
 import clubUpdate from '../lib/club/update';
 import userCreate from '../lib/user/create';
+import competitionUpsert from '../lib/competition/upsert';
 
 const resolvers = {
   Query: {
@@ -49,12 +50,15 @@ const resolvers = {
     createClub(_, { name }) {
       return Club.create({ name: name});
     },
-    createSession(_, { club, title, date}) {
-      return Club.findById(club)
-        .then(club => club.createSession({ title: title, date: date }));
+    createSession(_, { competition, title, date}) {
+      return Competition.findById(competition)
+        .then(competition => competition.createSession({ title: title, date: date, clubId: competition.clubId }));
     },
     updateClub(_, { id, input }) {
       return clubUpdate(id, input);
+    },
+    upsertCompetition(_, { id, input }) {
+      return competitionUpsert(id, input);
     },
   },
 

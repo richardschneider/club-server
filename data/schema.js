@@ -77,8 +77,9 @@ type Mutation {
     password: String!) : User
   createClub(name: String!) : Club
   updateClub(id: ID!, input: ClubInput) : Club
-  createSession(club: ID!, title: String!, date: String!) : Session
+  createSession(competition: ID!, title: String!, date: String!) : Session
   scoreSession(id: ID!, scoring: ScoringAlgorithm!): Session
+  upsertCompetition(id: ID, input: CompetitionInput): Competition
 }
 
 schema {
