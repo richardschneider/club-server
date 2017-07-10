@@ -11,6 +11,7 @@ const ClubModel = db.define('club', {
 const CompetitionModel = db.define('competition', {
   name: { type: Sequelize.STRING, validate: { notEmpty: true } },
   type: { type: Sequelize.STRING },
+  startDate: { type: Sequelize.STRING, validate: { notEmpty: true } },
 });
 
 /* const UserModel = */ db.define('user', {
