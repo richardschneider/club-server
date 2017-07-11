@@ -78,6 +78,7 @@ type Mutation {
   createClub(name: String!) : Club
   updateClub(id: ID!, input: ClubInput) : Club
   createSession(competition: ID!, title: String!, date: String!) : Session
+  updateSession(id: ID!, input: SessionInput) : Session
   scoreSession(id: ID!, scoring: ScoringAlgorithm!): Session
   upsertCompetition(id: ID, input: CompetitionInput): Competition
 }

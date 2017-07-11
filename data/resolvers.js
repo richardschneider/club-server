@@ -1,6 +1,7 @@
 import { Club, Player, Session, SessionPair, Board, Game, User, Competition } from './connectors';
 import score from '../lib/session/score';
 import clubUpdate from '../lib/club/update';
+import sessionUpdate from '../lib/session/update';
 import userCreate from '../lib/user/create';
 import competitionUpsert from '../lib/competition/upsert';
 
@@ -53,6 +54,9 @@ const resolvers = {
     createSession(_, { competition, title, date}) {
       return Competition.findById(competition)
         .then(competition => competition.createSession({ title: title, date: date, clubId: competition.clubId }));
+    },
+    updateSession(_, { id, input }) {
+      return sessionUpdate(id, input);
     },
     updateClub(_, { id, input }) {
       return clubUpdate(id, input);
